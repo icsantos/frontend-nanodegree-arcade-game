@@ -1,3 +1,93 @@
 body {
-    text-align: center;
+  font-family: "Gochi Hand", cursive;
+  margin: 1em auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+header,
+nav,
+footer,
+section,
+article,
+div {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.avatars {
+  width: 25%;
+  order: 0;
+}
+
+.avatar {
+  height: 30%;
+  overflow: hidden;
+}
+
+.avatar img {
+  height: 85px;
+}
+
+.game {
+  width: 50%;
+  order: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.score {
+  width: 50%;
+  order: 0;
+  font-size: 2.5em;
+//  font-weight: 400;
+  color: #f00;
+}
+
+.lives {
+  width: 50%;
+  order: 1;
+}
+
+.life {
+  height: 30%;
+  overflow: hidden;
+}
+
+img.life {
+  height: 50px;
+}
+
+img.active {
+  display: inline;
+}
+
+img.inactive {
+  display: none;
+}
+
+.field {
+  width: 100%;
+  order: 2;
+}
+
+.rules {
+  width: 25%;
+  order: 2;
+  text-align: left;
+}
+
+.rules ul {
+  padding-right: 1em;
 }
