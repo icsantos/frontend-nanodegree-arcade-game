@@ -51,6 +51,7 @@ var Engine = (function (global) {
       enemy.update(dt);
     });
     player.update();
+    token.update();
   }
 
   /* This function is called by main (our game loop) and itself calls all
@@ -78,8 +79,8 @@ var Engine = (function (global) {
     allEnemies.forEach(function (enemy) {
       enemy.render();
     });
-
     player.render();
+    token.render();
   }
 
   /* This function initially draws the "game level", it will then call
@@ -188,6 +189,10 @@ var Engine = (function (global) {
     'images/char-horn-girl.png',
     'images/char-pink-girl.png',
     'images/char-princess-girl.png',
+    'images/Gem Blue.png',
+    'images/Gem Green.png',
+    'images/Gem Orange.png',
+    'images/Star.png',
     'images/Heart.png'
   ]);
   Resources.onReady(init);

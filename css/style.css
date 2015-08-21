@@ -37,7 +37,7 @@ img {
 }
 
 .avatar img {
-  height: 85px;
+  height: 60px;
 }
 
 .game {
@@ -63,10 +63,6 @@ img {
 .life {
   height: 30%;
   overflow: hidden;
-}
-
-img.life {
-  height: 50px;
 }
 
 img.active {
