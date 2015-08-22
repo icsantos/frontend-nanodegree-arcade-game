@@ -25,18 +25,11 @@ var Engine = (function (global) {
     canvas = doc.createElement('canvas'),
     ctx = canvas.getContext('2d'),
     lastTime,
-    reqID;
+    reqID,
+    lives;
 
   canvas.width = 505;
   canvas.height = 606;
-  canvas.perimeter = {
-    top: 0,
-    left: 0,
-    bottom: 400,
-    right: 400,
-    colSize: 101,
-    rowSize: 83
-  };
   doc.getElementById('field').appendChild(canvas);
 
   /* This is called by the update function  and loops through all of the
@@ -47,11 +40,11 @@ var Engine = (function (global) {
    * render methods.
    */
   function updateEntities(dt) {
+    token.update();
     allEnemies.forEach(function (enemy) {
       enemy.update(dt);
     });
-    player.update();
-    token.update();
+    lives = player.update();
   }
 
   /* This function is called by main (our game loop) and itself calls all
@@ -73,6 +66,7 @@ var Engine = (function (global) {
    * on your enemy and player entities within app.js
    */
   function renderEntities() {
+    token.render();
     /* Loop through all of the objects within the allEnemies array and call
      * the render function you have defined.
      */
@@ -80,7 +74,6 @@ var Engine = (function (global) {
       enemy.render();
     });
     player.render();
-    token.render();
   }
 
   /* This function initially draws the "game level", it will then call
@@ -120,11 +113,26 @@ var Engine = (function (global) {
          * so that we get the benefits of caching these images, since
          * we're using them over and over.
          */
-        ctx.drawImage(Resources.get(rowImages[row]), col * canvas.perimeter.colSize, row * canvas.perimeter.rowSize);
+        ctx.drawImage(Resources.get(rowImages[row]), col * BLOCK_WIDTH, row * BLOCK_HEIGHT);
       }
     }
-
     renderEntities();
+  }
+  
+  // add a safety zone above the water block
+  function drawSafetyZone() {
+    ctx.fillStyle = "#5069d4";
+    ctx.fillRect(0, 23, 505, 50);
+    ctx.strokeStyle = "#000";
+    ctx.strokeRect(0, 23, 505, 51);
+    ctx.strokeStyle = "#fff";
+    ctx.strokeRect(1, 24, 504, 50);
+    ctx.textAlign = "left";
+    ctx.font = "1.5em Calibri";
+    ctx.fillStyle = "#5fc148";
+    ctx.scale(3.8, 1);
+    ctx.fillText("SAFETY ZONE", 1, 45, 505);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   /* This function does nothing but it could have been a good place to
@@ -133,6 +141,22 @@ var Engine = (function (global) {
    */
   function reset() {
     // noop
+  }
+  
+  // no more lives
+  function gameOver() {
+    'use strict';
+    var x = canvas.width / 2,
+      y = canvas.height / 2;
+    ctx.textAlign = "center";
+    ctx.font = "bold italic 4em 'Gochi Hand'";
+    ctx.fillStyle = "red";
+    ctx.fillText("awww", x, y);
+    ctx.fillText("game over", x, y + 60);
+    ctx.strokeStyle = "yellow";
+    ctx.strokeText("awww", x, y);
+    ctx.strokeText("game over", x, y + 60);
+    win.cancelAnimationFrame(reqID);
   }
 
   /* This function serves as the kickoff point for the game loop itself
@@ -153,6 +177,11 @@ var Engine = (function (global) {
      */
     update(dt);
     render();
+    
+    if (lives === 0) {
+      gameOver();
+      return;
+    }
 
     /* Set our lastTime variable which is used to determine the time delta
      * for the next time this function is called.
@@ -173,6 +202,7 @@ var Engine = (function (global) {
     reset();
     lastTime = Date.now();
     main();
+    drawSafetyZone();
   }
 
   /* Go ahead and load all of the images we know we're going to need to

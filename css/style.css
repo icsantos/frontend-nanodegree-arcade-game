@@ -31,12 +31,8 @@ img {
   order: 0;
 }
 
-.avatar {
-  height: 30%;
+.avatar img{
   overflow: hidden;
-}
-
-.avatar img {
   height: 60px;
 }
 
@@ -50,8 +46,7 @@ img {
 .score {
   width: 50%;
   order: 0;
-  font-size: 2.5em;
-//  font-weight: 400;
+  font-size: 3em;
   color: #f00;
 }
 
@@ -60,9 +55,9 @@ img {
   order: 1;
 }
 
-.life {
-  height: 30%;
+img.life {
   overflow: hidden;
+  height: 30px;
 }
 
 img.active {
@@ -85,5 +80,6 @@ img.inactive {
 }
 
 .rules ul {
+  padding-left: 1em;
   padding-right: 1em;
 }

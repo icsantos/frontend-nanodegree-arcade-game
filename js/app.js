@@ -1,7 +1,13 @@
-// constants
-var BLOCK_WIDTH = 101,  // canvas.perimeter.colSize
-  BLOCK_HEIGHT = 83,    // canvas.perimeter.rowSize
-  BLOCK_HEIGHT_OFFSET = 50;   // invisible part above the stone, grass and water blocks
+// constants for stone, grass and water blocks
+var BLOCK_WIDTH = 101,  // size along x-axis
+  BLOCK_HEIGHT = 83,    // size along y-axis
+  BLOCK_HEIGHT_OFFSET = 50;   // transparent part above the block image
+
+// constants for the playing field
+var FIELD_TOP = BLOCK_HEIGHT_OFFSET,
+  FIELD_LEFT = 0,
+  FIELD_BOTTOM = 400,
+  FIELD_RIGHT = 400;
 
 // Generate a random integer within a range.  We will use this for speed and coordinates.
 // Source: http://stackoverflow.com/a/7228322
@@ -87,7 +93,7 @@ Enemy.prototype.update = function (dt) {
   this.y += randomInteger(-1, 1) / 3;
   this.perimeter = objectPerimeter(this);
   // Has the enemy walked off the right side?
-  if (this.x > canvas.perimeter.right + BLOCK_WIDTH) {
+  if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
     this.reset();
   }
   if (objectsCollided(player, this)) {
@@ -121,20 +127,25 @@ Player.prototype.reset = function () {
   'use strict';
   this.x = xCoord(0, 4, this.width);
   this.y = yCoord(5, 5, this.height);
-  if (this.lives < 1) {
-    this.gameOver();
-  }
+  this.tokenPoints = 0;
+  this.tokenLives = 0;
 };
 
 // Update the player's position
 Player.prototype.update = function () {
   'use strict';
+  if (this.lives < 1) {
+    this.gameOver();
+    return 0;
+  }
   // Has the player reached the water?
-  if (this.y < canvas.perimeter.top) {
-    this.updateScore(1);
+  if (this.y < FIELD_TOP) {
+    this.updateScore(1 + this.tokenPoints);
+    this.updateLives(this.tokenLives);
     this.reset();
   }
   this.perimeter = objectPerimeter(this);
+  return 1;
 };
 
 // Move player in the direction selected
@@ -142,21 +153,21 @@ Player.prototype.handleInput = function (key) {
   'use strict';
   switch (key) {
   case 'up':
-    this.y -= (this.y > canvas.perimeter.top) ? BLOCK_HEIGHT : 0;
+    this.y -= (this.y > FIELD_TOP) ? BLOCK_HEIGHT : 0;
     break;
   case 'left':
-    this.x -= (this.x > canvas.perimeter.left) ? BLOCK_WIDTH : 0;
+    this.x -= (this.x - BLOCK_WIDTH > FIELD_LEFT) ? BLOCK_WIDTH : 0;
     break;
   case 'down':
-    this.y += (this.y < canvas.perimeter.bottom) ? BLOCK_HEIGHT : 0;
+    this.y += (this.y < FIELD_BOTTOM) ? BLOCK_HEIGHT : 0;
     break;
   case 'right':
-    this.x += (this.x < canvas.perimeter.right) ? BLOCK_WIDTH : 0;
+    this.x += (this.x < FIELD_RIGHT) ? BLOCK_WIDTH : 0;
     break;
   }
 };
 
-// Draw the player on the screen, required method for game
+// Draw the player on the screen
 Player.prototype.render = function () {
   'use strict';
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -172,7 +183,7 @@ Player.prototype.updateScore = function (score) {
 // Update the player's lives
 Player.prototype.updateLives = function (lives) {
   'use strict';
-  this.lives += (this.lives + lives <= 5) ? lives : 0;
+  this.lives = (this.lives + lives >= 5) ? 5 : this.lives + lives ;
   $('img.life').each(function (index) {
     if (index < player.lives) {
       $(this).removeClass('inactive').addClass('active');
@@ -186,16 +197,6 @@ Player.prototype.updateLives = function (lives) {
 Player.prototype.gameOver = function () {
   'use strict';
   $('#score').text("Your Score: " + this.score);
-  ctx.textAlign = "center";
-  ctx.textBaseline = "hanging";
-  ctx.font = "bold italic 4em 'Gochi Hand'";
-  ctx.fillStyle = "red";
-  ctx.fillText("awww", canvas.width / 2, this.y);
-  ctx.fillText("game over", canvas.width / 2, this.y + 60);
-  ctx.strokeStyle = "yellow";
-  ctx.strokeText("awww", canvas.width / 2, this.y);
-  ctx.strokeText("game over", canvas.width / 2, this.y + 60);
-  window.cancelAnimationFrame(reqID);
 };
 
 // --------------------------------------------------
@@ -250,10 +251,11 @@ Token.prototype.reset = function () {
   this.height = obj.height;
   this.points = obj.points;
   this.lives = obj.lives;
-  this.duration = randomInteger(100, 200);
-  this.speed = 0;
   this.x = xCoord(0, 4, this.width);
   this.y = yCoord(1, 3, this.height);
+  this.delay = randomInteger(2, 10) * 10000;
+  this.fadeTime = randomInteger(5, 10) * 10000;
+  this.alphaDivisor = this.fadeTime;
 };
 
 // Update the token's position
@@ -261,20 +263,28 @@ Token.prototype.update = function () {
   'use strict';
   this.perimeter = objectPerimeter(this);
   if (objectsCollided(player, this)) {
-    player.updateScore(this.points);
-    player.updateLives(this.lives);
+    player.tokenPoints += this.points;
+    player.tokenLives += this.lives;
     this.reset();
+  }
+  this.fadeTime -= 100;
+  if (this.fadeTime <= 0) {
+    this.reset();
+  } else {
+    ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
+    this.render();
+    ctx.globalAlpha = 1.0;
   }
 };
 
 // Draw the token on the screen
 Token.prototype.render = function () {
   'use strict';
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y, this.width, this.height);
+  this.delay -= 100;
+  if (this.delay <= 0) {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
 };
-
-
-
 
 // --------------------------------------------------
 // Instantiate objects
