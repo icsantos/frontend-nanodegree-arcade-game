@@ -97,8 +97,7 @@ var Engine = (function (global) {
       numRows = rowImages.length,
       numCols = 5,
       row,
-      col,
-      rowImage;
+      col;
 
     /* Loop through the number of rows and columns we've defined above
      * and, using the rowImages array, draw the correct image for that
@@ -145,7 +144,6 @@ var Engine = (function (global) {
 
   // no more lives
   function gameOver() {
-    'use strict';
     var x = canvas.width / 2,
       y = canvas.height / 2;
     ctx.textAlign = "center";
