@@ -43,8 +43,8 @@ var Engine = (function (global) {
     token.update();
     allEnemies.forEach(function (enemy) {
       enemy.update(dt);
+      lives = player.update();
     });
-    lives = player.update();
   }
 
   /* This function is called by main (our game loop) and itself calls all
@@ -118,7 +118,7 @@ var Engine = (function (global) {
     }
     renderEntities();
   }
-  
+
   // add a safety zone above the water block
   function drawSafetyZone() {
     ctx.fillStyle = "#5069d4";
@@ -142,7 +142,7 @@ var Engine = (function (global) {
   function reset() {
     // noop
   }
-  
+
   // no more lives
   function gameOver() {
     'use strict';
@@ -177,7 +177,7 @@ var Engine = (function (global) {
      */
     update(dt);
     render();
-    
+
     if (lives === 0) {
       gameOver();
       return;
@@ -222,6 +222,7 @@ var Engine = (function (global) {
     'images/Gem Blue.png',
     'images/Gem Green.png',
     'images/Gem Orange.png',
+    'images/Key.png',
     'images/Star.png',
     'images/Heart.png'
   ]);

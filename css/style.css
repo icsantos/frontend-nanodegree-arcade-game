@@ -31,7 +31,24 @@ img {
   order: 0;
 }
 
-.avatar img{
+.avatar img {
+  overflow: hidden;
+  height: 60px;
+}
+
+label {
+  display: block;
+}
+
+label > input {
+  display: none;
+}
+
+label > input + img {
+  cursor: pointer;
+  border-radius: 50%;
+  border: 5px double transparent;
+  padding: 10px;
   overflow: hidden;
   height: 60px;
 }
@@ -43,10 +60,14 @@ img {
   flex-wrap: wrap;
 }
 
+label > input:checked + img {
+  border: 5px double #5fc148;
+}
+
 .score {
   width: 50%;
   order: 0;
-  font-size: 3em;
+  font-size: 2em;
   color: #f00;
 }
 

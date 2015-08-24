@@ -62,6 +62,16 @@ function objectsCollided(object1, object2) {
   return collided;
 }
 
+function toggleAvatarSelection(enable) {
+  if (enable) {
+    $('input[name=player]').prop('disabled', false);
+    $('label > input + img').css('cursor', 'pointer');
+  } else {
+    $('input[name=player]').prop('disabled', true);
+    $('label > input + img').css('cursor', 'default');
+  }
+}
+
 // --------------------------------------------------
 // Enemy class
 // --------------------------------------------------
@@ -111,12 +121,52 @@ Enemy.prototype.render = function () {
 // --------------------------------------------------
 // Player class
 // --------------------------------------------------
-var Player = function () {
+// for purpose of collision detection, the height excludes the shadow
+var avatars = [
+  {
+    id: 'char-boy',
+    sprite: 'images/char-boy.png',
+    width: 67,
+    height: 77
+  }, {
+    id: 'char-cat-girl',
+    sprite: 'images/char-cat-girl.png',
+    width: 68,
+    height: 76
+  }, {
+    id: 'char-horn-girl',
+    sprite: 'images/char-horn-girl.png',
+    width: 67,
+    height: 77
+  }, {
+    id: 'char-pink-girl',
+    sprite: 'images/char-pink-girl.png',
+    width: 68,
+    height: 76
+  }, {
+    id: 'char-princess-girl',
+    sprite: 'images/char-princess-girl.png',
+    width: 68,
+    height: 78
+  }
+];
+
+var Player = function (charId) {
   'use strict';
   // The image/sprite for our player, this uses a helper to easily load images
-  this.sprite = 'images/char-boy.png';
-  this.width = 67;
-  this.height = 77;  // excluding the shadow
+  var obj;
+  if (typeof charId !== "undefined" && charId) {
+    obj = $.grep(avatars, function(e){ return e.id === charId; })[0];
+  } else {
+    var index = randomInteger(1, avatars.length) - 1,
+      radio = 'input[name=player]:eq(' + index + ')';
+    $(radio).prop('checked', true);
+    toggleAvatarSelection(false);
+    obj = avatars[index];
+  }
+  this.sprite = obj.sprite;
+  this.width = obj.width;
+  this.height = obj.height;
   this.score = 0;
   this.lives = 3;
   this.reset();
@@ -202,30 +252,36 @@ Player.prototype.gameOver = function () {
 // --------------------------------------------------
 // Token class
 // --------------------------------------------------
-var Tokens = [
+var tokens = [
   {
     sprite: 'images/Gem Blue.png',
     width: 50,
     height: 54,
-    points: 5,
+    points: 2,
     lives: 0
   }, {
     sprite: 'images/Gem Green.png',
     width: 50,
     height: 54,
-    points: 10,
+    points: 4,
     lives: 0
   }, {
     sprite: 'images/Gem Orange.png',
     width: 50,
     height: 54,
-    points: 15,
+    points: 8,
+    lives: 0
+  }, {
+    sprite: 'images/Key.png',
+    width: 50,
+    height: 50,
+    points: 16,
     lives: 0
   }, {
     sprite: 'images/Star.png',
-    width: 50,
-    height: 50,
-    points: 25,
+    width: 29,
+    height: 42,
+    points: 32,
     lives: 0
   }, {
     sprite: 'images/Heart.png',
@@ -244,18 +300,22 @@ var Token = function () {
 // Token will be placed at a stone-block
 Token.prototype.reset = function () {
   'use strict';
-  var index = randomInteger(0, Tokens.length - 1),
-    obj = Tokens[index];
-  this.sprite = obj.sprite;
-  this.width = obj.width;
-  this.height = obj.height;
-  this.points = obj.points;
-  this.lives = obj.lives;
-  this.x = xCoord(0, 4, this.width);
-  this.y = yCoord(1, 3, this.height);
-  this.delay = randomInteger(2, 10) * 10000;
-  this.fadeTime = randomInteger(5, 10) * 10000;
-  this.alphaDivisor = this.fadeTime;
+  var index = randomInteger(1, tokens.length * 3);
+  if (index > tokens.length) {
+    this.reset();
+  } else {
+    var obj = tokens[index - 1];
+    this.sprite = obj.sprite;
+    this.width = obj.width;
+    this.height = obj.height;
+    this.points = obj.points;
+    this.lives = obj.lives;
+    this.x = xCoord(0, 4, this.width);
+    this.y = yCoord(1, 3, this.height);
+    this.delay = randomInteger(2, 10) * 10000;
+    this.fadeTime = randomInteger(5, 10) * 10000;
+    this.alphaDivisor = this.fadeTime;
+  }
 };
 
 // Update the token's position
@@ -310,4 +370,11 @@ document.addEventListener('keyup', function (e) {
   };
 
   player.handleInput(allowedKeys[e.keyCode]);
+});
+
+// TODO Player selects avatar
+$('input[name="player"]').change(function() {
+  'use strict';
+  console.log($(this).val());
+  var player = new Player($(this).val());
 });
