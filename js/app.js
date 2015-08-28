@@ -73,14 +73,46 @@ function toggleAvatarSelection(enable) {
 }
 
 // --------------------------------------------------
+// GamePiece superclass
+// --------------------------------------------------
+var GamePiece = function() {
+  'use strict';
+
+};
+
+// Draw the GamePiece on the screen
+GamePiece.prototype.render = function (delay) {
+  'use strict';
+  this.delay -= delay;
+  if (this.delay <= 0) {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+};
+
+// --------------------------------------------------
 // Enemy class
 // --------------------------------------------------
+var enemies = [
+  {
+    sprite: 'images/enemy-bug.png',
+    width: 99,
+    height: 66
+  }, {
+    // https://pixabay.com/en/handbag-bag-brown-clutch-leather-155755/
+    sprite: 'images/ladybag.png',
+    width: 63,
+    height: 66
+  }
+];
+
 var Enemy = function () {
   'use strict';
   // The image/sprite for our enemies, this uses a helper to easily load images
-  this.sprite = 'images/enemy-bug.png';
-  this.width = 99;
-  this.height = 66;  // excluding the shadow
+  var index = randomInteger(1, enemies.length),
+    obj = enemies[index - 1];
+  this.sprite = obj.sprite;
+  this.width = obj.width;
+  this.height = obj.height;
   this.reset();
 };
 
@@ -351,7 +383,7 @@ Token.prototype.render = function () {
 // --------------------------------------------------
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()],
+var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()],
   player = new Player(),
   token = new Token();
 

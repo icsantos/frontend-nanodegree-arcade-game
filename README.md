@@ -17,4 +17,5 @@ Press F5 to start a new game
 * Win or lose hearts on the way to safety
   - Win a heart when you pick up a heart (Time Lords have 2 but you can have up to 5)
   - Lose a heart (and banked points) when you hit a bug (or a bug hits you)
+  - The ladybags are deadly too
   - Game ends when you're heartless
