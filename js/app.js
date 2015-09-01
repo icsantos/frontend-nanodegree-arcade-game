@@ -16,52 +16,6 @@ function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-// Determine middle of randomly chosen column
-function xCoord(min, max, objWidth) {
-  'use strict';
-  var randCol = randomInteger(min, max),
-    left = randCol * BLOCK_WIDTH,
-    middle = left + (BLOCK_WIDTH - objWidth) / 2;
-  return middle;
-}
-
-// Place object in middle of randomly chosen row
-function yCoord(min, max, objHeight) {
-  'use strict';
-  var randRow = randomInteger(min, max),
-    top = randRow * BLOCK_HEIGHT,
-    middle = top + (BLOCK_HEIGHT - objHeight) / 2;
-  return middle + BLOCK_HEIGHT_OFFSET;
-}
-
-// Set the object's 'hit' zone for use in collision detection
-function objectPerimeter(object) {
-  'use strict';
-  var left = object.x,
-    right = left + object.width,
-    top = object.y,
-    bottom = top + object.height;
-  return {
-    top: top,
-    left: left,
-    bottom: bottom,
-    right: right
-  };
-}
-
-// Source: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-function objectsCollided(object1, object2) {
-  'use strict';
-  var collided = false;
-  if (object1.perimeter && object2.perimeter) {
-    collided = (object1.perimeter.left < object2.perimeter.right &&
-      object1.perimeter.right > object2.perimeter.left &&
-      object1.perimeter.top < object2.perimeter.bottom &&
-      object1.perimeter.bottom > object2.perimeter.top);
-  }
-  return collided;
-}
-
 function toggleAvatarSelection(enable) {
   if (enable) {
     $('input[name=player]').prop('disabled', false);
@@ -77,16 +31,58 @@ function toggleAvatarSelection(enable) {
 // --------------------------------------------------
 var GamePiece = function() {
   'use strict';
-
 };
 
-// Draw the GamePiece on the screen
-GamePiece.prototype.render = function (delay) {
+GamePiece.prototype.piece = function (obj) {
   'use strict';
-  this.delay -= delay;
-  if (this.delay <= 0) {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  // The image/sprite uses a helper to easily load images
+  this.sprite = obj.sprite;
+  this.width = obj.width;
+  this.height = obj.height;
+};
+
+// Place game piece in middle of randomly chosen column
+GamePiece.prototype.xCoord = function (min, max) {
+  'use strict';
+  var randCol = randomInteger(min, max) * BLOCK_WIDTH;
+  this.x = randCol + (BLOCK_WIDTH - this.width) / 2;
+};
+
+// Place game piece in middle of randomly chosen row
+GamePiece.prototype.yCoord = function (min, max) {
+  'use strict';
+  var randRow = randomInteger(min, max) * BLOCK_HEIGHT;
+  this.y = BLOCK_HEIGHT_OFFSET + randRow + (BLOCK_HEIGHT - this.height) / 2;
+};
+
+// Set the game piece's 'hit' zone for use in collision detection
+GamePiece.prototype.setPerimeter = function () {
+  'use strict';
+  this.perimeter = {
+    top: this.y,
+    left: this.x,
+    bottom: this.y + this.height,
+    right: this.x + this.width
+  };
+};
+
+// Draw the game piece on the screen
+GamePiece.prototype.render = function () {
+  'use strict';
+  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Source: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+GamePiece.prototype.hit = function (object2) {
+  'use strict';
+  var hit = false;
+  if (this.perimeter && object2.perimeter) {
+    hit = (this.perimeter.left < object2.perimeter.right &&
+      this.perimeter.right > object2.perimeter.left &&
+      this.perimeter.top < object2.perimeter.bottom &&
+      this.perimeter.bottom > object2.perimeter.top);
   }
+  return hit;
 };
 
 // --------------------------------------------------
@@ -107,21 +103,19 @@ var enemies = [
 
 var Enemy = function () {
   'use strict';
-  // The image/sprite for our enemies, this uses a helper to easily load images
-  var index = randomInteger(1, enemies.length),
-    obj = enemies[index - 1];
-  this.sprite = obj.sprite;
-  this.width = obj.width;
-  this.height = obj.height;
+  GamePiece.call(this);
   this.reset();
 };
+Enemy.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
+Enemy.prototype.constructor = Enemy; // reset constructor from GamePiece to Enemy
 
 // Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
 Enemy.prototype.reset = function () {
   'use strict';
+  this.piece(enemies[randomInteger(1, enemies.length) - 1]);
+  this.xCoord(-3, -1);
+  this.yCoord(1, 3);
   this.speed = randomInteger(75, 200);
-  this.x = xCoord(-3, -1, this.width);
-  this.y = yCoord(1, 3, this.height);
 };
 
 // Update the enemy's position
@@ -133,21 +127,15 @@ Enemy.prototype.update = function (dt) {
   this.x += this.speed * dt;
   // give the bug a little up-and-down jiggle
   this.y += randomInteger(-1, 1) / 3;
-  this.perimeter = objectPerimeter(this);
+  this.setPerimeter();
   // Has the enemy walked off the right side?
   if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
     this.reset();
   }
-  if (objectsCollided(player, this)) {
+  if (this.hit(player)) {
     player.updateLives(-1);
     player.reset();
   }
-};
-
-// Draw the enemy on the screen
-Enemy.prototype.render = function () {
-  'use strict';
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // --------------------------------------------------
@@ -185,7 +173,7 @@ var avatars = [
 
 var Player = function (charId) {
   'use strict';
-  // The image/sprite for our player, this uses a helper to easily load images
+  GamePiece.call(this);
   var obj;
   if (typeof charId !== "undefined" && charId) {
     obj = $.grep(avatars, function(e){ return e.id === charId; })[0];
@@ -196,19 +184,20 @@ var Player = function (charId) {
     toggleAvatarSelection(false);
     obj = avatars[index];
   }
-  this.sprite = obj.sprite;
-  this.width = obj.width;
-  this.height = obj.height;
+  this.piece(obj);
   this.score = 0;
   this.lives = 3;
   this.reset();
 };
+Player.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
+Player.prototype.constructor = Player; // reset constructor from GamePiece to Player
 
 // Place player at starting point
 Player.prototype.reset = function () {
   'use strict';
-  this.x = xCoord(0, 4, this.width);
-  this.y = yCoord(5, 5, this.height);
+  this.xCoord(0, 4);
+  this.yCoord(5, 5);
+  this.setPerimeter();
   this.tokenPoints = 0;
   this.tokenLives = 0;
 };
@@ -226,7 +215,7 @@ Player.prototype.update = function () {
     this.updateLives(this.tokenLives);
     this.reset();
   }
-  this.perimeter = objectPerimeter(this);
+  this.setPerimeter();
   return 1;
 };
 
@@ -247,12 +236,6 @@ Player.prototype.handleInput = function (key) {
     this.x += (this.x < FIELD_RIGHT) ? BLOCK_WIDTH : 0;
     break;
   }
-};
-
-// Draw the player on the screen
-Player.prototype.render = function () {
-  'use strict';
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
 // Update the player's score
@@ -326,46 +309,36 @@ var tokens = [
 
 var Token = function () {
   'use strict';
+  GamePiece.call(this);
   this.reset();
 };
+Token.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
+Token.prototype.constructor = Token; // reset constructor from GamePiece to Token
 
-// Token will be placed at a stone-block
+// Token will be placed on a stone-block
 Token.prototype.reset = function () {
   'use strict';
-  var index = randomInteger(1, tokens.length * 3);
-  if (index > tokens.length) {
-    this.reset();
-  } else {
-    var obj = tokens[index - 1];
-    this.sprite = obj.sprite;
-    this.width = obj.width;
-    this.height = obj.height;
-    this.points = obj.points;
-    this.lives = obj.lives;
-    this.x = xCoord(0, 4, this.width);
-    this.y = yCoord(1, 3, this.height);
-    this.delay = randomInteger(2, 10) * 10000;
-    this.fadeTime = randomInteger(5, 10) * 10000;
-    this.alphaDivisor = this.fadeTime;
-  }
+  var obj = tokens[randomInteger(1, tokens.length) - 1];
+  this.piece(obj);
+  this.pointsOnhold = obj.points;
+  this.livesOnhold = obj.lives;
+  this.points = 0;
+  this.lives = 0;
+  this.delay = randomInteger(2, 10) * 10000;
+  this.fadeTime = randomInteger(5, 10) * 10000;
+  this.alphaDivisor = this.fadeTime;
+  this.xCoord(0, 4);
+  this.yCoord(1, 3);
 };
 
 // Update the token's position
 Token.prototype.update = function () {
   'use strict';
-  this.perimeter = objectPerimeter(this);
-  if (objectsCollided(player, this)) {
+  this.setPerimeter();
+  if (this.hit(player)) {
     player.tokenPoints += this.points;
     player.tokenLives += this.lives;
     this.reset();
-  }
-  this.fadeTime -= 100;
-  if (this.fadeTime <= 0) {
-    this.reset();
-  } else {
-    ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
-    this.render();
-    ctx.globalAlpha = 1.0;
   }
 };
 
@@ -374,7 +347,16 @@ Token.prototype.render = function () {
   'use strict';
   this.delay -= 100;
   if (this.delay <= 0) {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.points = this.pointsOnhold;
+    this.lives = this.livesOnhold;
+    this.fadeTime -= 100;
+    if (this.fadeTime <= 0) {
+      this.reset();
+    } else {
+      ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
+      GamePiece.prototype.render.call(this);
+      ctx.globalAlpha = 1.0;
+    }
   }
 };
 
