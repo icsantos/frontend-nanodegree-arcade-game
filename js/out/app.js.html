@@ -1,4 +1,32 @@
-/** 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** 
  * Size of a stone, grass or water block along x-axis.
  * @constant
  * @type {number}
@@ -50,7 +78,7 @@ var FIELD_TOP = BLOCK_HEIGHT_OFFSET,
   FIELD_RIGHT = 400;
 
 /**
- * Generate a random integer between <tt>min</tt> and <tt>max</tt>
+ * Generate a random integer between &lt;tt>min&lt;/tt> and &lt;tt>max&lt;/tt>
  * to use for speed and coordinates.
  * @param {number} min - The lower bound; this can be a negative value.
  * @param {number} max - The upper bound.
@@ -63,9 +91,9 @@ function randomInteger(min, max) {
 
 /**
  * Toggle on or off the selection of the player's avatar.
- * @param {boolean} enable - <em>true</em> | <em>false</em>
- *   <p>Set it to <em>true</em> to allow the player to pick an avatar.</p>
- *   <p>Set it to <em>false</em> during game play.</p>
+ * @param {boolean} enable - &lt;em>true&lt;/em> | &lt;em>false&lt;/em>
+ *   &lt;p>Set it to &lt;em>true&lt;/em> to allow the player to pick an avatar.&lt;/p>
+ *   &lt;p>Set it to &lt;em>false&lt;/em> during game play.&lt;/p>
  */
 function toggleAvatarSelection(enable) {
   'use strict';
@@ -165,16 +193,16 @@ GamePiece.prototype.render = function () {
  * Detect if this game piece was hit by another game piece.
  * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
  * @param {object} object2 - An object representing a second game piece
- * @returns {boolean} <em>true</em> | <em>false</em>
- * @default <em>false</em>
+ * @returns {boolean} &lt;em>true&lt;/em> | &lt;em>false&lt;/em>
+ * @default &lt;em>false&lt;/em>
  */
 GamePiece.prototype.hit = function (object2) {
   'use strict';
   var hit = false;
-  if (this.perimeter && object2.perimeter) {
-    hit = (this.perimeter.left < object2.perimeter.right &&
-      this.perimeter.right > object2.perimeter.left &&
-      this.perimeter.top < object2.perimeter.bottom &&
+  if (this.perimeter &amp;&amp; object2.perimeter) {
+    hit = (this.perimeter.left &lt; object2.perimeter.right &amp;&amp;
+      this.perimeter.right > object2.perimeter.left &amp;&amp;
+      this.perimeter.top &lt; object2.perimeter.bottom &amp;&amp;
       this.perimeter.bottom > object2.perimeter.top);
   }
   return hit;
@@ -276,7 +304,7 @@ var Player = function (charId) {
   var obj,
     index,
     radio;
-  if (typeof charId !== "undefined" && charId) {
+  if (typeof charId !== "undefined" &amp;&amp; charId) {
     obj = $.grep(avatars, function (e) { return e.id === charId; })[0];
   } else {
     index = randomInteger(1, avatars.length) - 1;
@@ -306,12 +334,12 @@ Player.prototype.reset = function () {
 // Update the player's position
 Player.prototype.update = function () {
   'use strict';
-  if (this.lives < 1) {
+  if (this.lives &lt; 1) {
     this.gameOver();
     return 0;
   }
   // Has the player reached the water?
-  if (this.y < FIELD_TOP) {
+  if (this.y &lt; FIELD_TOP) {
     this.updateScore(1 + this.tokenPoints);
     this.updateLives(this.tokenLives);
     this.reset();
@@ -331,10 +359,10 @@ Player.prototype.handleInput = function (key) {
     this.x -= (this.x - BLOCK_WIDTH > FIELD_LEFT) ? BLOCK_WIDTH : 0;
     break;
   case 'down':
-    this.y += (this.y < FIELD_BOTTOM) ? BLOCK_HEIGHT : 0;
+    this.y += (this.y &lt; FIELD_BOTTOM) ? BLOCK_HEIGHT : 0;
     break;
   case 'right':
-    this.x += (this.x < FIELD_RIGHT) ? BLOCK_WIDTH : 0;
+    this.x += (this.x &lt; FIELD_RIGHT) ? BLOCK_WIDTH : 0;
     break;
   }
 };
@@ -351,7 +379,7 @@ Player.prototype.updateLives = function (lives) {
   'use strict';
   this.lives = (this.lives + lives >= 5) ? 5 : this.lives + lives;
   $('img.life').each(function (index) {
-    if (index < player.lives) {
+    if (index &lt; player.lives) {
       $(this).removeClass('inactive').addClass('active');
     } else {
       $(this).removeClass('active').addClass('inactive');
@@ -434,7 +462,7 @@ Token.prototype.reset = function () {
 Token.prototype.update = function () {
   'use strict';
   this.setPerimeter();
-  if (this.delay <= 0 && this.hit(player)) {
+  if (this.delay &lt;= 0 &amp;&amp; this.hit(player)) {
     player.tokenPoints += this.points;
     player.tokenLives += this.lives;
     this.reset();
@@ -445,9 +473,9 @@ Token.prototype.update = function () {
 Token.prototype.render = function () {
   'use strict';
   this.delay -= 100;
-  if (this.delay <= 0) {
+  if (this.delay &lt;= 0) {
     this.fadeTime -= 100;
-    if (this.fadeTime <= 0) {
+    if (this.fadeTime &lt;= 0) {
       this.reset();
     } else {
       ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
@@ -489,3 +517,26 @@ $('input[name="player"]').change(function () {
   console.log($(this).val());
   var player = new Player($(this).val());
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemy.html">Enemy</a></li><li><a href="GamePiece.html">GamePiece</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BLOCK_HEIGHT">BLOCK_HEIGHT</a></li><li><a href="global.html#BLOCK_HEIGHT_OFFSET">BLOCK_HEIGHT_OFFSET</a></li><li><a href="global.html#BLOCK_WIDTH">BLOCK_WIDTH</a></li><li><a href="global.html#FIELD_BOTTOM">FIELD_BOTTOM</a></li><li><a href="global.html#FIELD_LEFT">FIELD_LEFT</a></li><li><a href="global.html#FIELD_RIGHT">FIELD_RIGHT</a></li><li><a href="global.html#FIELD_TOP">FIELD_TOP</a></li><li><a href="global.html#randomInteger">randomInteger</a></li><li><a href="global.html#toggleAvatarSelection">toggleAvatarSelection</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 02 2015 02:56:34 GMT-0500 (Central Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
