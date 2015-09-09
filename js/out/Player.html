@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Enemy</title>
+    <title>JSDoc: Class: Player</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Enemy</h1>
+    <h1 class="page-title">Class: Player</h1>
 
     
 
@@ -29,7 +29,7 @@
 <header>
     
         <h2>
-        Enemy
+        Player
         </h2>
         
     
@@ -42,18 +42,83 @@
 
     
 
-    <h4 class="name" id="Enemy"><span class="type-signature"></span>new Enemy<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Player"><span class="type-signature"></span>new Player<span class="signature">(charid<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
 
 
+<div class="description">
+    This function:<ul><li>Constructs a GamePiece of avatars type.<li>Selects the avatar to use (if one is not specified) and uses jQuery to indicate the selected avatar.<li>Calls GamePiece.piece() to set the sprite, height and width properties.<li>Initializes the score and lives properties.</ul>
+</div>
 
 
 
 
 
 
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>charid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">An optional parameter identifying the avatars.id to use. If not provided, an avatar will be randomly chosen.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -86,7 +151,7 @@
 
         <tr>
             
-                <td class="name"><code>speed</code></td>
+                <td class="name"><code>score</code></td>
             
 
             <td class="type">
@@ -102,7 +167,30 @@
 
             
 
-            <td class="description last">The initial speed of the enemy game piece.</td>
+            <td class="description last">The number of points scored by the player.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>lives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The number of lives remaining for the player.</td>
         </tr>
 
     
@@ -141,7 +229,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line232">line 232</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line349">line 349</a>
     </li></ul></dd>
     
 
@@ -195,6 +283,224 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="gameOver"><span class="type-signature"></span>gameOver<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    This method uses jQuery to display the final score on the page.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line484">line 484</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="handleInput"><span class="type-signature"></span>handleInput<span class="signature">(key)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    This method:<ul><li>Updates the x coordinate if the player pressed the left or right movement key.<li>Updates the y coordinate if the player pressed the up or down movement key.</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The key pressed by the player.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line429">line 429</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+<h5>Listens to Events:</h5>
+<ul>
+    <li>module:addEventListener~event:keyup</li>
+</ul>
+
+
+
+
+
+
+
+
+
 
         
             
@@ -705,7 +1011,7 @@
 
 
 <div class="description">
-    Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
+    This method:<ul><li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set starting position of the player.<li>Calls GamePiece.setPerimeter() to set the player's hit zone.<li>Initializes the tokenPoints and tokenLives properties.</ul>
 </div>
 
 
@@ -746,7 +1052,7 @@
 
         <tr>
             
-                <td class="name"><code>speed</code></td>
+                <td class="name"><code>tokenPoints</code></td>
             
 
             <td class="type">
@@ -762,7 +1068,30 @@
 
             
 
-            <td class="description last">The initial speed of the enemy game piece.</td>
+            <td class="description last">The number of banked points accumulated by picking up tokens.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tokenLives</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The number of banked lives accumulated by picking up tokens.</td>
         </tr>
 
     
@@ -801,7 +1130,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line244">line 244</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line382">line 382</a>
     </li></ul></dd>
     
 
@@ -1088,14 +1417,96 @@
 
     
 
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(dt)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Updates the enemy's position and perimeter.<li>Checks if the enemy has walked off the playing field.<li>Checks if the enemy hit the player.</ul>
+    This method:<ul><li>Checks if the player has zero lives and if so, calls gameOver().<li>Checks if the player has reached the safety zone and if so,   <ul>  <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>  <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>  <li>Places the player back to the starting position by calling <tt>reset()</tt>.  </ul></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line403">line 403</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateLives"><span class="type-signature"></span>updateLives<span class="signature">(lives)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    This method:<ul><li>Adds the value specified in the parameter to the player's lives, up to a maximum of 5.<li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.</ul>
 </div>
 
 
@@ -1131,7 +1542,7 @@
 
         <tr>
             
-                <td class="name"><code>dt</code></td>
+                <td class="name"><code>lives</code></td>
             
 
             <td class="type">
@@ -1147,7 +1558,7 @@
 
             
 
-            <td class="description last">A time delta between ticks</td>
+            <td class="description last">The number of lives to add to or deduct from the player's lives.</td>
         </tr>
 
     
@@ -1188,19 +1599,143 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line262">line 262</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line469">line 469</a>
     </li></ul></dd>
     
 
     
 
     
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection">https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection</a></li>
-        </ul>
-    </dd>
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateScore"><span class="type-signature"></span>updateScore<span class="signature">(score)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    This method:<ul><li>Adds the value specified in the parameter to the score.<li>Uses jQuery to display the score on the page.</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>score</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The number of points to add to the player's score.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line455">line 455</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     

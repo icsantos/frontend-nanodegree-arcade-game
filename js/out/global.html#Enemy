@@ -141,7 +141,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line232">line 232</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line233">line 233</a>
     </li></ul></dd>
     
 
@@ -311,7 +311,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line179">line 179</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line180">line 180</a>
     </li></ul></dd>
     
 
@@ -378,7 +378,7 @@
 
 
 <div class="description">
-    Method that sets the sprite, width and height properties of a game piece.
+    Method that sets the sprite, width and height properties of a playing piece.
 </div>
 
 
@@ -420,13 +420,7 @@
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#avatars">avatars</a></span>
-|
-
-<span class="param-type"><a href="global.html#enemies">enemies</a></span>
-|
-
-<span class="param-type"><a href="global.html#tokens">tokens</a></span>
+<span class="param-type"><a href="global.html#Enemy">Enemy</a></span>
 
 
             
@@ -436,7 +430,7 @@
 
             
 
-            <td class="description last">An object containing the image sprite URL, width and height.</td>
+            <td class="description last">An object containing the image sprite URL, width and height.   See Global.html#enemies.</td>
         </tr>
 
     
@@ -580,7 +574,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line114">line 114</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -667,7 +661,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line167">line 167</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line168">line 168</a>
     </li></ul></dd>
     
 
@@ -801,7 +795,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line244">line 244</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line245">line 245</a>
     </li></ul></dd>
     
 
@@ -1057,7 +1051,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line154">line 154</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line155">line 155</a>
     </li></ul></dd>
     
 
@@ -1095,7 +1089,7 @@
 
 
 <div class="description">
-    This method:<ul><li>Updates the enemy's position and perimeter.<li>Checks if the enemy has walked off the playing field.<li>Checks if the enemy hit the player.</ul>
+    This method:<li>Updates the enemy's position and perimeter.<li>Checks if the enemy has walked off the playing field.<li>Checks if the enemy hit the player.
 </div>
 
 
@@ -1188,7 +1182,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line262">line 262</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line261">line 261</a>
     </li></ul></dd>
     
 
@@ -1406,7 +1400,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line127">line 127</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line128">line 128</a>
     </li></ul></dd>
     
 
@@ -1617,7 +1611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line140">line 140</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line141">line 141</a>
     </li></ul></dd>
     
 
@@ -1659,13 +1653,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Enemy.html">Enemy</a></li><li><a href="GamePiece.html">GamePiece</a></li><li><a href="Player.html">Player</a></li><li><a href="Token.html">Token</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addEventListener">addEventListener</a></li><li><a href="global.html#allEnemies">allEnemies</a></li><li><a href="global.html#BLOCK_HEIGHT">BLOCK_HEIGHT</a></li><li><a href="global.html#BLOCK_HEIGHT_OFFSET">BLOCK_HEIGHT_OFFSET</a></li><li><a href="global.html#BLOCK_WIDTH">BLOCK_WIDTH</a></li><li><a href="global.html#FIELD_BOTTOM">FIELD_BOTTOM</a></li><li><a href="global.html#FIELD_LEFT">FIELD_LEFT</a></li><li><a href="global.html#FIELD_RIGHT">FIELD_RIGHT</a></li><li><a href="global.html#FIELD_TOP">FIELD_TOP</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#randomInteger">randomInteger</a></li><li><a href="global.html#toggleAvatarSelection">toggleAvatarSelection</a></li><li><a href="global.html#token">token</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="global.html#Enemy">Enemy</a></li><li><a href="GamePiece.html">GamePiece</a></li><li><a href="Player.html">Player</a></li></ul><h3>Global</h3><ul><li><a href="global.html#avatars">avatars</a></li><li><a href="global.html#BLOCK_HEIGHT">BLOCK_HEIGHT</a></li><li><a href="global.html#BLOCK_HEIGHT_OFFSET">BLOCK_HEIGHT_OFFSET</a></li><li><a href="global.html#BLOCK_WIDTH">BLOCK_WIDTH</a></li><li><a href="global.html#FIELD_BOTTOM">FIELD_BOTTOM</a></li><li><a href="global.html#FIELD_LEFT">FIELD_LEFT</a></li><li><a href="global.html#FIELD_RIGHT">FIELD_RIGHT</a></li><li><a href="global.html#FIELD_TOP">FIELD_TOP</a></li><li><a href="global.html#randomInteger">randomInteger</a></li><li><a href="global.html#toggleAvatarSelection">toggleAvatarSelection</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 09 2015 05:25:57 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 09 2015 01:54:17 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
