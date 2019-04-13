@@ -1,4 +1,5 @@
 # Classic Arcade Game Clone
+
 Udacity Front-End Web Developer Nanodegree Project 3
 
 ## Project overview
@@ -7,7 +8,7 @@ The objective is to practice object-oriented JavaScript programming by recreatin
 
 ## Getting started
 
-The starting source code was cloned from https://github.com/udacity/frontend-nanodegree-arcade-game.
+The starting source code was cloned from <https://github.com/udacity/frontend-nanodegree-arcade-game>.
 
 ## Specifications
 
@@ -20,17 +21,18 @@ The starting source code was cloned from https://github.com/udacity/frontend-nan
 | Documentation         | A README file is included detailing all steps required to successfully run and play the application |
 
 ## Steps taken
-* Created a GamePiece superclass with methods to -
+
+- Created a GamePiece superclass with methods to -
   - set the x and y coordinates of the game piece
   - render the game piece on the playing field
   - determine the 'hit' zone for use in collision detection
   - detect collision with another game piece
-* Created Enemy, Player and Token classes that extend the GamePiece superclass
+- Created Enemy, Player and Token classes that extend the GamePiece superclass
   - Each Enemy moves from left to right, and on collision with the Player piece resets the game
   - The Player moves left, right, up or down; when it reaches the safety zone *above* the water, it earns either banked points or an extra life
   - A Token appears at random times and slowly fades away; the Player banks points when it 'collides' with a token
-* Passed the source code through JSHint and reformatted per the Udacity JavaScript Style Guide
-* Added JSDoc comments to the source code
+- Passed the source code through JSHint and reformatted per the Udacity JavaScript Style Guide
+- Added JSDoc comments to the source code
 
 ## Results
 
@@ -41,8 +43,9 @@ Click [here](http://icsantos.github.io/frontend-nanodegree-arcade-game/) to play
 The game starts automatically.  Press F5 to start a new game.
 
 ### Rules of the game
-* Use arrow keys to move left, right, up, down
-* Score points when you reach the safety zone
+
+- Use arrow keys to move left, right, up, down
+- Score points when you reach the safety zone
   - Reach the safety zone to score 1 point
   - Grab a blue gem to bank 2 points
   - Grab a green gem to bank 4 points
@@ -50,7 +53,7 @@ The game starts automatically.  Press F5 to start a new game.
   - Grab a key to bank 16 points
   - Grab a star to bank 32 points
   - You must reach the safety zone to cash in your banked points
-* Win or lose hearts on the way to safety
+- Win or lose hearts on the way to safety
   - Win a heart when you pick up a heart (Time Lords have 2 but you can have up to 5)
   - Lose a heart (and banked points) when you hit a bug (or a bug hits you)
   - The ladybags are deadly too
