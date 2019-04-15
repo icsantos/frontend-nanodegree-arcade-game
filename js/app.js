@@ -1,24 +1,27 @@
+/* eslint-disable id-length */
 /**
  * Size of a stone, grass or water block along x-axis.
  * @constant
  * @type {number}
  * @default
  */
-var BLOCK_WIDTH = 101,
-  /**
-   * Size of a stone, grass or water block along y-axis.
-   * @constant
-   * @type {number}
-   * @default
-   */
-  BLOCK_HEIGHT = 83,
-  /**
-   * Transparent part of a stone, grass or water block above the block image.
-   * @constant
-   * @type {number}
-   * @default
-   */
-  BLOCK_HEIGHT_OFFSET = 50;
+const BLOCK_WIDTH = 101;
+
+/**
+ * Size of a stone, grass or water block along y-axis.
+ * @constant
+ * @type {number}
+ * @default
+ */
+const BLOCK_HEIGHT = 83;
+
+/**
+ * Transparent part of a stone, grass or water block above the block image.
+ * @constant
+ * @type {number}
+ * @default
+ */
+const BLOCK_HEIGHT_OFFSET = 50;
 
 /**
  * Top of the playing field.
@@ -26,38 +29,40 @@ var BLOCK_WIDTH = 101,
  * @type {number}
  * @default BLOCK_HEIGHT_OFFSET
  */
-var FIELD_TOP = BLOCK_HEIGHT_OFFSET,
-  /**
-   * Left side of the playing field.
-   * @constant
-   * @type {number}
-   * @default
-   */
-  FIELD_LEFT = 0,
-  /**
-   * Bottom of the playing field.
-   * @constant
-   * @type {number}
-   * @default
-   */
-  FIELD_BOTTOM = 400,
-  /**
-   * Right side of the playing field.
-   * @constant
-   * @type {number}
-   * @default
-   */
-  FIELD_RIGHT = 400;
+const FIELD_TOP = BLOCK_HEIGHT_OFFSET;
+
+/**
+ * Left side of the playing field.
+ * @constant
+ * @type {number}
+ * @default
+ */
+const FIELD_LEFT = 0;
+
+/**
+ * Bottom of the playing field.
+ * @constant
+ * @type {number}
+ * @default
+ */
+const FIELD_BOTTOM = 400;
+
+/**
+ * Right side of the playing field.
+ * @constant
+ * @type {number}
+ * @default
+ */
+const FIELD_RIGHT = 400;
 
 /**
  * Generate a random integer between <tt>min</tt> and <tt>max</tt>
  * to use for speed and coordinates.
  * @param {number} min - The lower bound; this can be a negative value.
  * @param {number} max - The upper bound.
- * @returns {number}
+ * @returns {number} - A random integer
  */
 function randomInteger(min, max) {
-  'use strict';
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -66,9 +71,9 @@ function randomInteger(min, max) {
  * @param {boolean} enable - <em>true</em> | <em>false</em>
  *   <p>Set it to <em>true</em> to allow the player to pick an avatar.</p>
  *   <p>Set it to <em>false</em> during game play.</p>
+ * @returns {undefined}
  */
 function toggleAvatarSelection(enable) {
-  'use strict';
   if (enable) {
     $('input[name=player]').prop('disabled', false);
     $('label > input + img').css('cursor', 'pointer');
@@ -84,9 +89,9 @@ function toggleAvatarSelection(enable) {
 /**
  * @constructor
  * @classdesc A superclass of the playing pieces we can use in the game.  It requires
- * the modules {@link http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js},
+ * [jQuery]{@link http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js},
  * {@link resources.js} and {@link engine.js}.
- * @requires http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js
+ * @requires jquery.min.js
  * @requires resources.js
  * @requires engine.js
  * @property {string} sprite - The URL of the image sprite.  The image/sprite uses a helper to easily load images.
@@ -99,6 +104,7 @@ function toggleAvatarSelection(enable) {
  * @property {number} perimeter.left - The left side of the game piece.
  * @property {number} perimeter.bottom - The bottom of the game piece.
  * @property {number} perimeter.right - The right side of the game piece.
+ * @returns {undefined}
  */
 var GamePiece = function () {
   'use strict';
@@ -110,9 +116,9 @@ var GamePiece = function () {
  * @property {string} sprite - The URL of the image sprite.  The image/sprite uses a helper to easily load images.
  * @property {number} width - The width of the image sprite.
  * @property {number} height - The height of the image sprite.
+ * @returns {undefined}
  */
 GamePiece.prototype.piece = function (obj) {
-  'use strict';
   this.sprite = obj.sprite;
   this.width = obj.width;
   this.height = obj.height;
@@ -123,10 +129,11 @@ GamePiece.prototype.piece = function (obj) {
  * @param {number} min - The lower bound; this can be a negative value.
  * @param {number} max - The upper bound.
  * @property {number} x - The location of the game piece on the x-axis.
+ * @returns {undefined}
  */
 GamePiece.prototype.xCoord = function (min, max) {
-  'use strict';
   var randCol = randomInteger(min, max) * BLOCK_WIDTH;
+
   this.x = randCol + (BLOCK_WIDTH - this.width) / 2;
 };
 
@@ -136,10 +143,11 @@ GamePiece.prototype.xCoord = function (min, max) {
  * @param {number} min - The lower bound; keep it between 1 and 5.
  * @param {number} max - The upper bound; keep it between 1 and 5.
  * @property {number} y - The location of the game piece on the y-axis.
+ * @returns {undefined}
  */
 GamePiece.prototype.yCoord = function (min, max) {
-  'use strict';
   var randRow = randomInteger(min, max) * BLOCK_HEIGHT;
+
   this.y = BLOCK_HEIGHT_OFFSET + randRow + (BLOCK_HEIGHT - this.height) / 2;
 };
 
@@ -150,22 +158,22 @@ GamePiece.prototype.yCoord = function (min, max) {
  * @property {number} perimeter.left - The left side of the game piece.
  * @property {number} perimeter.bottom - The bottom of the game piece.
  * @property {number} perimeter.right - The right side of the game piece.
+ * @returns {undefined}
  */
 GamePiece.prototype.setPerimeter = function () {
-  'use strict';
   this.perimeter = {
-    top: this.y,
-    left: this.x,
-    bottom: this.y + this.height,
-    right: this.x + this.width
+    'top': this.y,
+    'left': this.x,
+    'bottom': this.y + this.height,
+    'right': this.x + this.width
   };
 };
 
 /**
  * Draw the game piece on the screen.
+ * @returns {undefined}
  */
 GamePiece.prototype.render = function () {
-  'use strict';
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -177,14 +185,15 @@ GamePiece.prototype.render = function () {
  * @default <em>false</em>
  */
 GamePiece.prototype.hit = function (object2) {
-  'use strict';
-  var hit = false;
+  let hit = false;
+
   if (this.perimeter && object2.perimeter) {
-    hit = (this.perimeter.left < object2.perimeter.right &&
+    hit = this.perimeter.left < object2.perimeter.right &&
       this.perimeter.right > object2.perimeter.left &&
       this.perimeter.top < object2.perimeter.bottom &&
-      this.perimeter.bottom > object2.perimeter.top);
+      this.perimeter.bottom > object2.perimeter.top;
   }
+
   return hit;
 };
 
@@ -211,16 +220,16 @@ GamePiece.prototype.hit = function (object2) {
  *   }
  * ];
  */
-var enemies = [
+const enemies = [
   {
-    sprite: 'images/enemy-bug.png',
-    width: 99,
-    height: 66
+    'sprite': 'images/enemy-bug.png',
+    'width': 99,
+    'height': 66
   }, {
     // https://pixabay.com/en/handbag-bag-brown-clutch-leather-155755/
-    sprite: 'images/ladybag.png',
-    width: 63,
-    height: 66
+    'sprite': 'images/ladybag.png',
+    'width': 63,
+    'height': 66
   }
 ];
 
@@ -229,20 +238,22 @@ var enemies = [
  * @extends GamePiece
  * @property {number} speed - The initial speed of the enemy game piece.
  */
-var Enemy = function () {
-  'use strict';
+const Enemy = function () {
   GamePiece.call(this);
   this.reset();
 };
-Enemy.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
-Enemy.prototype.constructor = Enemy; // reset constructor from GamePiece to Enemy
+
+// Subclass prototype delegation
+Enemy.prototype = Object.create(GamePiece.prototype);
+// Reset constructor from GamePiece to Enemy
+Enemy.prototype.constructor = Enemy;
 
 /**
  * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
  * @property {number} speed - The initial speed of the enemy game piece.
+ * @returns {undefined}
  */
 Enemy.prototype.reset = function () {
-  'use strict';
   this.piece(enemies[randomInteger(1, enemies.length) - 1]);
   this.xCoord(-3, -1);
   this.yCoord(1, 3);
@@ -258,13 +269,12 @@ Enemy.prototype.reset = function () {
  * </ul>
  * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
  * @param {number} dt - A time delta between ticks
+ * @returns {undefined}
  */
 Enemy.prototype.update = function (dt) {
-  'use strict';
-  // Multiply any movement by the dt parameter to ensure
-  // the game runs at the same speed for all computers.
+  // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
   this.x += this.speed * dt;
-  // give the bug a little up-and-down jiggle
+  // Give the bug a little up-and-down jiggle
   this.y += randomInteger(-1, 1) / 3;
   this.setPerimeter();
   // Has the enemy walked off the right side?
@@ -303,32 +313,32 @@ Enemy.prototype.update = function (dt) {
  *   }
  * ];
  */
-var avatars = [
+const avatars = [
   {
-    id: 'char-boy',
-    sprite: 'images/char-boy.png',
-    width: 67,
-    height: 77
+    'id': 'char-boy',
+    'sprite': 'images/char-boy.png',
+    'width': 67,
+    'height': 77
   }, {
-    id: 'char-cat-girl',
-    sprite: 'images/char-cat-girl.png',
-    width: 68,
-    height: 76
+    'id': 'char-cat-girl',
+    'sprite': 'images/char-cat-girl.png',
+    'width': 68,
+    'height': 76
   }, {
-    id: 'char-horn-girl',
-    sprite: 'images/char-horn-girl.png',
-    width: 67,
-    height: 77
+    'id': 'char-horn-girl',
+    'sprite': 'images/char-horn-girl.png',
+    'width': 67,
+    'height': 77
   }, {
-    id: 'char-pink-girl',
-    sprite: 'images/char-pink-girl.png',
-    width: 68,
-    height: 76
+    'id': 'char-pink-girl',
+    'sprite': 'images/char-pink-girl.png',
+    'width': 68,
+    'height': 76
   }, {
-    id: 'char-princess-girl',
-    sprite: 'images/char-princess-girl.png',
-    width: 68,
-    height: 78
+    'id': 'char-princess-girl',
+    'sprite': 'images/char-princess-girl.png',
+    'width': 68,
+    'height': 78
   }
 ];
 
@@ -344,30 +354,36 @@ var avatars = [
  * @extends GamePiece
  * @property {number} score - The number of points scored by the player.
  * @property {number} lives - The number of lives remaining for the player.
- * @param {string} [charid] - An optional parameter identifying the avatars.id to use. If not provided, an avatar will be randomly chosen.
+ * @param {string} [charId] - An optional parameter identifying the avatars.id to use. If not provided, an avatar will be randomly chosen.
+ * @returns {undefined}
  */
-var Player = function (charId) {
-  'use strict';
+const Player = function (charId) {
   GamePiece.call(this);
-  var obj,
-    index,
-    radio;
-  if (typeof charId !== "undefined" && charId) {
-    obj = $.grep(avatars, function (e) { return e.id === charId; })[0];
+
+  let obj = {};
+
+  if (typeof charId !== 'undefined' && charId) {
+    obj = avatars.find((event) => event.id === charId);
   } else {
-    index = randomInteger(1, avatars.length) - 1;
-    radio = 'input[name=player]:eq(' + index + ')';
+    const index = randomInteger(1, avatars.length) - 1;
+
+    const radio = `input[name=player]:eq(${index})`;
+
     $(radio).prop('checked', true);
     toggleAvatarSelection(false);
     obj = avatars[index];
   }
+
   this.piece(obj);
   this.score = 0;
   this.lives = 3;
   this.reset();
 };
-Player.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
-Player.prototype.constructor = Player; // reset constructor from GamePiece to Player
+
+// Subclass prototype delegation
+Player.prototype = Object.create(GamePiece.prototype);
+// Reset constructor from GamePiece to Player
+Player.prototype.constructor = Player;
 
 /**
  * This method:
@@ -378,9 +394,9 @@ Player.prototype.constructor = Player; // reset constructor from GamePiece to Pl
  * </ul>
  * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
  * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
+ * @returns {undefined}
  */
 Player.prototype.reset = function () {
-  'use strict';
   this.xCoord(0, 4);
   this.yCoord(5, 5);
   this.setPerimeter();
@@ -392,18 +408,19 @@ Player.prototype.reset = function () {
  * This method:
  * <ul>
  * <li>Checks if the player has zero lives and if so, calls gameOver().
- * <li>Checks if the player has reached the safety zone and if so, 
+ * <li>Checks if the player has reached the safety zone and if so,
  *   <ul>
  *   <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>
  *   <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>
  *   <li>Places the player back to the starting position by calling <tt>reset()</tt>.
  *   </ul>
  * </ul>
+ * @returns {integer} - Number of lives
  */
 Player.prototype.update = function () {
-  'use strict';
   if (this.lives < 1) {
     this.gameOver();
+
     return 0;
   }
   // Has the player reached the safety zone?
@@ -413,6 +430,7 @@ Player.prototype.update = function () {
     this.reset();
   }
   this.setPerimeter();
+
   return 1;
 };
 
@@ -424,23 +442,24 @@ Player.prototype.update = function () {
  * </ul>
  * @listens module:addEventListener~keyup
  * @param {string} key - The key pressed by the player.
+ * @returns {undefined}
  */
-// 
 Player.prototype.handleInput = function (key) {
-  'use strict';
   switch (key) {
   case 'up':
-    this.y -= (this.y > FIELD_TOP) ? BLOCK_HEIGHT : 0;
+    this.y -= this.y > FIELD_TOP ? BLOCK_HEIGHT : 0;
     break;
   case 'left':
-    this.x -= (this.x - BLOCK_WIDTH > FIELD_LEFT) ? BLOCK_WIDTH : 0;
+    this.x -= this.x - BLOCK_WIDTH > FIELD_LEFT ? BLOCK_WIDTH : 0;
     break;
   case 'down':
-    this.y += (this.y < FIELD_BOTTOM) ? BLOCK_HEIGHT : 0;
+    this.y += this.y < FIELD_BOTTOM ? BLOCK_HEIGHT : 0;
     break;
   case 'right':
-    this.x += (this.x < FIELD_RIGHT) ? BLOCK_WIDTH : 0;
+    this.x += this.x < FIELD_RIGHT ? BLOCK_WIDTH : 0;
     break;
+  default:
+    // Do nothing
   }
 };
 
@@ -451,9 +470,9 @@ Player.prototype.handleInput = function (key) {
  * <li>Uses jQuery to display the score on the page.
  * </ul>
  * @param {number} score - The number of points to add to the player's score.
+ * @returns {undefined}
  */
 Player.prototype.updateScore = function (score) {
-  'use strict';
   this.score += score;
   $('#score').text(this.score);
 };
@@ -465,25 +484,27 @@ Player.prototype.updateScore = function (score) {
  * <li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.
  * </ul>
  * @param {number} lives - The number of lives to add to or deduct from the player's lives.
+ * @returns {undefined}
  */
 Player.prototype.updateLives = function (lives) {
-  'use strict';
-  this.lives = (this.lives + lives >= 5) ? 5 : this.lives + lives;
+  this.lives = this.lives + lives >= 5 ? 5 : this.lives + lives;
   $('img.life').each(function (index) {
     if (index < player.lives) {
-      $(this).removeClass('inactive').addClass('active');
+      $(this).removeClass('inactive')
+        .addClass('active');
     } else {
-      $(this).removeClass('active').addClass('inactive');
+      $(this).removeClass('active')
+        .addClass('inactive');
     }
   });
 };
 
 /**
  * This method uses jQuery to display the final score on the page.
- */
+  * @returns {undefined}
+*/
 Player.prototype.gameOver = function () {
-  'use strict';
-  $('#score').text("Your Score: " + this.score);
+  $('#score').text(`Your Score: ${this.score}`);
 };
 
 // --------------------------------------------------
@@ -515,43 +536,43 @@ Player.prototype.gameOver = function () {
  *   }
  * ];
  */
-var tokens = [
+const tokens = [
   {
-    sprite: 'images/Gem Blue.png',
-    width: 50,
-    height: 54,
-    points: 2,
-    lives: 0
+    'sprite': 'images/Gem Blue.png',
+    'width': 50,
+    'height': 54,
+    'points': 2,
+    'lives': 0
   }, {
-    sprite: 'images/Gem Green.png',
-    width: 50,
-    height: 54,
-    points: 4,
-    lives: 0
+    'sprite': 'images/Gem Green.png',
+    'width': 50,
+    'height': 54,
+    'points': 4,
+    'lives': 0
   }, {
-    sprite: 'images/Gem Orange.png',
-    width: 50,
-    height: 54,
-    points: 8,
-    lives: 0
+    'sprite': 'images/Gem Orange.png',
+    'width': 50,
+    'height': 54,
+    'points': 8,
+    'lives': 0
   }, {
-    sprite: 'images/Key.png',
-    width: 50,
-    height: 50,
-    points: 16,
-    lives: 0
+    'sprite': 'images/Key.png',
+    'width': 50,
+    'height': 50,
+    'points': 16,
+    'lives': 0
   }, {
-    sprite: 'images/Star.png',
-    width: 29,
-    height: 42,
-    points: 32,
-    lives: 0
+    'sprite': 'images/Star.png',
+    'width': 29,
+    'height': 42,
+    'points': 32,
+    'lives': 0
   }, {
-    sprite: 'images/Heart.png',
-    width: 45,
-    height: 45,
-    points: 0,
-    lives: 1
+    'sprite': 'images/Heart.png',
+    'width': 45,
+    'height': 45,
+    'points': 0,
+    'lives': 1
   }
 ];
 
@@ -559,14 +580,17 @@ var tokens = [
  * This function constructs a GamePiece of tokens type.
  * @constructor
  * @extends GamePiece
+ * @returns {undefined}
  */
-var Token = function () {
-  'use strict';
+const Token = function () {
   GamePiece.call(this);
   this.reset();
 };
-Token.prototype = Object.create(GamePiece.prototype); // subclass prototype delegation
-Token.prototype.constructor = Token; // reset constructor from GamePiece to Token
+
+// Subclass prototype delegation
+Token.prototype = Object.create(GamePiece.prototype);
+// Reset constructor from GamePiece to Token
+Token.prototype.constructor = Token;
 
 /**
  * This method:
@@ -581,10 +605,11 @@ Token.prototype.constructor = Token; // reset constructor from GamePiece to Toke
  * @property {number} delay - How long to wait before rendering the token.
  * @property {number} fadeTime - How long it will take before the token fades completely from view.
  * @property {number} alphaDivisor - This will be used for setting the globalAlpha before rendering the token.
+ * @returns {undefined}
  */
 Token.prototype.reset = function () {
-  'use strict';
-  var obj = tokens[randomInteger(1, tokens.length) - 1];
+  const obj = tokens[randomInteger(1, tokens.length) - 1];
+
   this.piece(obj);
   this.points = obj.points;
   this.lives = obj.lives;
@@ -608,9 +633,9 @@ Token.prototype.reset = function () {
  * </ul>
  * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
  * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
+ * @returns {undefined}
  */
 Token.prototype.update = function () {
-  'use strict';
   this.setPerimeter();
   if (this.delay <= 0 && this.hit(player)) {
     player.tokenPoints += this.points;
@@ -631,7 +656,6 @@ Token.prototype.update = function () {
  */
 // Draw the token on the screen
 Token.prototype.render = function () {
-  'use strict';
   this.delay -= 100;
   if (this.delay <= 0) {
     this.fadeTime -= 100;
@@ -652,43 +676,43 @@ Token.prototype.render = function () {
  * Array of instances of the Enemy class
  * @type {Enemy[]}
  */
-var allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()],
-  /**
-   * An instance of the Player class
-   * @type {Player}
-   */
-  player = new Player(),
-  /**
-   * An instance of the Token class
-   * @type {Token}
-   */
-  token = new Token();
+const allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()];
+
+/**
+ * An instance of the Player class
+ * @type {Player}
+ */
+let player = new Player();
+
+/**
+ * An instance of the Token class
+ * @type {Token}
+ */
+const token = new Token();
 
 // --------------------------------------------------
 // Event Listeners
 // --------------------------------------------------
 /**
- * Event listener that listens for key presses and sends the keys to 
+ * Event listener that listens for key presses and sends the keys to
  * the Player.handleInput() method.
  * @event module:addEventListener~keyup
  * @function addEventListener
  * @global
  */
-document.addEventListener('keyup', function (e) {
-  'use strict';
+document.addEventListener('keyup', function (event) {
   var allowedKeys = {
-    37: 'left',
-    38: 'up',
-    39: 'right',
-    40: 'down'
+    '37': 'left',
+    '38': 'up',
+    '39': 'right',
+    '40': 'down'
   };
 
-  player.handleInput(allowedKeys[e.keyCode]);
+  player.handleInput(allowedKeys[event.keyCode]);
 });
 
 // TODO Player selects avatar
 $('input[name="player"]').change(function () {
-  'use strict';
   console.log($(this).val());
-  var player = new Player($(this).val());
+  player = new Player($(this).val());
 });
