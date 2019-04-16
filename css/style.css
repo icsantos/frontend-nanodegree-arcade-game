@@ -79,9 +79,6 @@ label > input:checked + img {
 img.life {
   overflow: hidden;
   height: 30px;
-}
-
-img.active {
   display: inline;
 }
 
