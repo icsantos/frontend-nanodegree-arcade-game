@@ -363,7 +363,7 @@ const Player = function (charId) {
   let obj = {};
 
   if (typeof charId !== 'undefined' && charId) {
-    obj = avatars.find((event) => event.id === charId);
+    obj = avatars.find((avatar) => avatar.id === charId);
   } else {
     const index = randomInteger(1, avatars.length) - 1;
 
@@ -487,20 +487,18 @@ Player.prototype.updateScore = function (score) {
  * @returns {undefined}
  */
 Player.prototype.updateLives = function (lives) {
-  this.lives = this.lives + lives >= 5 ? 5 : this.lives + lives;
+  this.lives = Math.min(this.lives + lives, 5);
   $('img.life').each(function (index) {
     if (index < player.lives) {
-      $(this).removeClass('inactive')
-        .addClass('active');
+      $(this).removeClass('inactive');
     } else {
-      $(this).removeClass('active')
-        .addClass('inactive');
+      $(this).addClass('inactive');
     }
   });
 };
 
 /**
- * This method uses jQuery to display the final score on the page.
+ * This method displays the final score on the page.
   * @returns {undefined}
 */
 Player.prototype.gameOver = function () {
@@ -582,92 +580,95 @@ const tokens = [
  * @extends GamePiece
  * @returns {undefined}
  */
-const Token = function () {
-  GamePiece.call(this);
-  this.reset();
-};
+class Token {
+  constructor() {
+    GamePiece.call(this);
+    this.reset();
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Randomly selects the token to use.
+   * <li>Calls GamePiece.piece() to set the sprite, height and width properties.
+   * <li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set the position of the token.  The token will be placed on a stone-block.
+   * <li>Initializes the points, lives, delay, fadeTime and alphaDivisor properties.
+   * </ul>
+   * @property {number} points - The number of points the token is worth.
+   * @property {number} lives - The number of lives the token is worth.
+   * @property {number} delay - How long to wait before rendering the token.
+   * @property {number} fadeTime - How long it will take before the token fades completely from view.
+   * @property {number} alphaDivisor - This will be used for setting the globalAlpha before rendering the token.
+   * @returns {undefined}
+   */
+  reset() {
+    const obj = tokens[randomInteger(1, tokens.length) - 1];
+
+    this.piece(obj);
+    this.points = obj.points;
+    this.lives = obj.lives;
+    this.delay = randomInteger(2, 10) * 10000;
+    this.fadeTime = randomInteger(5, 10) * 10000;
+    this.alphaDivisor = this.fadeTime;
+    this.xCoord(0, 4);
+    this.yCoord(1, 3);
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Calls GamePiece.setPerimeter() to set the token's hit zone.
+   * <li>Checks if the delay has expired and if the token was hit by the player, and if so:
+   *   <ul>
+   *   <li>Bank the points by adding token.points to player.tokenPoints.
+   *   <li>Bank the lives by adding token.lives to player.tokenLives.
+   *   <li>Prepare another token by calling the reset() method.
+   *   </ul>
+   * </ul>
+   * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
+   * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
+   * @returns {undefined}
+   */
+  update() {
+    this.setPerimeter();
+    if (this.delay <= 0 && this.hit(player)) {
+      player.tokenPoints += this.points;
+      player.tokenLives += this.lives;
+      this.reset();
+    }
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Deducts 100 from the delay property.
+   * <li>If the delay is more than zero, it does nothing else.
+   * <li>If the delay has reached zero or below, it deducts 100 from the fadeTime property.
+   * <li>If the fadeTime is more than zero, it adjusts the globalAlpha, calls the GamePiece.prototype.render() method, then resets the globalAlpha to 1.
+   * <li>If the fadeTime has reached zero or below, it calls the token's reset() method.
+   * </ul>
+   */
+  // Draw the token on the screen
+  render() {
+    this.delay -= 100;
+    if (this.delay <= 0) {
+      this.fadeTime -= 100;
+      if (this.fadeTime <= 0) {
+        this.reset();
+      }
+      else {
+        ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
+        GamePiece.prototype.render.call(this);
+        ctx.globalAlpha = 1.0;
+      }
+    }
+  }
+}
 
 // Subclass prototype delegation
 Token.prototype = Object.create(GamePiece.prototype);
 // Reset constructor from GamePiece to Token
 Token.prototype.constructor = Token;
-
-/**
- * This method:
- * <ul>
- * <li>Randomly selects the token to use.
- * <li>Calls GamePiece.piece() to set the sprite, height and width properties.
- * <li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set the position of the token.  The token will be placed on a stone-block.
- * <li>Initializes the points, lives, delay, fadeTime and alphaDivisor properties.
- * </ul>
- * @property {number} points - The number of points the token is worth.
- * @property {number} lives - The number of lives the token is worth.
- * @property {number} delay - How long to wait before rendering the token.
- * @property {number} fadeTime - How long it will take before the token fades completely from view.
- * @property {number} alphaDivisor - This will be used for setting the globalAlpha before rendering the token.
- * @returns {undefined}
- */
-Token.prototype.reset = function () {
-  const obj = tokens[randomInteger(1, tokens.length) - 1];
-
-  this.piece(obj);
-  this.points = obj.points;
-  this.lives = obj.lives;
-  this.delay = randomInteger(2, 10) * 10000;
-  this.fadeTime = randomInteger(5, 10) * 10000;
-  this.alphaDivisor = this.fadeTime;
-  this.xCoord(0, 4);
-  this.yCoord(1, 3);
-};
-
-/**
- * This method:
- * <ul>
- * <li>Calls GamePiece.setPerimeter() to set the token's hit zone.
- * <li>Checks if the delay has expired and if the token was hit by the player, and if so:
- *   <ul>
- *   <li>Bank the points by adding token.points to player.tokenPoints.
- *   <li>Bank the lives by adding token.lives to player.tokenLives.
- *   <li>Prepare another token by calling the reset() method.
- *   </ul>
- * </ul>
- * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
- * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
- * @returns {undefined}
- */
-Token.prototype.update = function () {
-  this.setPerimeter();
-  if (this.delay <= 0 && this.hit(player)) {
-    player.tokenPoints += this.points;
-    player.tokenLives += this.lives;
-    this.reset();
-  }
-};
-
-/**
- * This method:
- * <ul>
- * <li>Deducts 100 from the delay property.
- * <li>If the delay is more than zero, it does nothing else.
- * <li>If the delay has reached zero or below, it deducts 100 from the fadeTime property.
- * <li>If the fadeTime is more than zero, it adjusts the globalAlpha, calls the GamePiece.prototype.render() method, then resets the globalAlpha to 1.
- * <li>If the fadeTime has reached zero or below, it calls the token's reset() method.
- * </ul>
- */
-// Draw the token on the screen
-Token.prototype.render = function () {
-  this.delay -= 100;
-  if (this.delay <= 0) {
-    this.fadeTime -= 100;
-    if (this.fadeTime <= 0) {
-      this.reset();
-    } else {
-      ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
-      GamePiece.prototype.render.call(this);
-      ctx.globalAlpha = 1.0;
-    }
-  }
-};
 
 // --------------------------------------------------
 // Instantiate objects
@@ -711,8 +712,12 @@ document.addEventListener('keyup', function (event) {
   player.handleInput(allowedKeys[event.keyCode]);
 });
 
-// TODO Player selects avatar
-$('input[name="player"]').change(function () {
-  console.log($(this).val());
-  player = new Player($(this).val());
+/// TODO Player selects avatar
+$(document).ready(function () {
+  $('input[name=player]:radio').change(function() {
+    const avatar = $('input[name=player]:checked').val();
+
+    alert(avatar);
+    player = new Player(avatar);
+  });
 });
