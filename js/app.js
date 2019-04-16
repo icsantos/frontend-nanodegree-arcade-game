@@ -106,96 +106,96 @@ function toggleAvatarSelection(enable) {
  * @property {number} perimeter.right - The right side of the game piece.
  * @returns {undefined}
  */
-var GamePiece = function () {
-  'use strict';
-};
-
-/**
- * Method that sets the sprite, width and height properties of a game piece.
- * @param {avatars|enemies|tokens} obj - An object containing the image sprite URL, width and height.
- * @property {string} sprite - The URL of the image sprite.  The image/sprite uses a helper to easily load images.
- * @property {number} width - The width of the image sprite.
- * @property {number} height - The height of the image sprite.
- * @returns {undefined}
- */
-GamePiece.prototype.piece = function (obj) {
-  this.sprite = obj.sprite;
-  this.width = obj.width;
-  this.height = obj.height;
-};
-
-/**
- * Place the game piece in the middle of a randomly chosen column.
- * @param {number} min - The lower bound; this can be a negative value.
- * @param {number} max - The upper bound.
- * @property {number} x - The location of the game piece on the x-axis.
- * @returns {undefined}
- */
-GamePiece.prototype.xCoord = function (min, max) {
-  var randCol = randomInteger(min, max) * BLOCK_WIDTH;
-
-  this.x = randCol + (BLOCK_WIDTH - this.width) / 2;
-};
-
-
-/**
- * Place the game piece in the middle of a randomly chosen row.
- * @param {number} min - The lower bound; keep it between 1 and 5.
- * @param {number} max - The upper bound; keep it between 1 and 5.
- * @property {number} y - The location of the game piece on the y-axis.
- * @returns {undefined}
- */
-GamePiece.prototype.yCoord = function (min, max) {
-  var randRow = randomInteger(min, max) * BLOCK_HEIGHT;
-
-  this.y = BLOCK_HEIGHT_OFFSET + randRow + (BLOCK_HEIGHT - this.height) / 2;
-};
-
-/**
- * Set the game piece's 'hit' zone for use in collision detection.
- * @property {object} perimeter - The boundaries of the game piece on the x-axis and y-axis.
- * @property {number} perimeter.top - The top of the game piece.
- * @property {number} perimeter.left - The left side of the game piece.
- * @property {number} perimeter.bottom - The bottom of the game piece.
- * @property {number} perimeter.right - The right side of the game piece.
- * @returns {undefined}
- */
-GamePiece.prototype.setPerimeter = function () {
-  this.perimeter = {
-    'top': this.y,
-    'left': this.x,
-    'bottom': this.y + this.height,
-    'right': this.x + this.width
-  };
-};
-
-/**
- * Draw the game piece on the screen.
- * @returns {undefined}
- */
-GamePiece.prototype.render = function () {
-  ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-/**
- * Detect if this game piece was hit by another game piece.
- * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
- * @param {object} object2 - An object representing a second game piece
- * @returns {boolean} <em>true</em> | <em>false</em>
- * @default <em>false</em>
- */
-GamePiece.prototype.hit = function (object2) {
-  let hit = false;
-
-  if (this.perimeter && object2.perimeter) {
-    hit = this.perimeter.left < object2.perimeter.right &&
-      this.perimeter.right > object2.perimeter.left &&
-      this.perimeter.top < object2.perimeter.bottom &&
-      this.perimeter.bottom > object2.perimeter.top;
+class GamePiece {
+  constructor() {
+    'use strict';
   }
 
-  return hit;
-};
+  /**
+   * Method that sets the sprite, width and height properties of a game piece.
+   * @param {avatars|enemies|tokens} obj - An object containing the image sprite URL, width and height.
+   * @property {string} sprite - The URL of the image sprite.  The image/sprite uses a helper to easily load images.
+   * @property {number} width - The width of the image sprite.
+   * @property {number} height - The height of the image sprite.
+   * @returns {undefined}
+   */
+  piece(obj) {
+    this.sprite = obj.sprite;
+    this.width = obj.width;
+    this.height = obj.height;
+  }
+
+  /**
+   * Place the game piece in the middle of a randomly chosen column.
+   * @param {number} min - The lower bound; this can be a negative value.
+   * @param {number} max - The upper bound.
+   * @property {number} x - The location of the game piece on the x-axis.
+   * @returns {undefined}
+   */
+  xCoord(min, max) {
+    var randCol = randomInteger(min, max) * BLOCK_WIDTH;
+    this.x = randCol + (BLOCK_WIDTH - this.width) / 2;
+  }
+
+  /**
+   * Place the game piece in the middle of a randomly chosen row.
+   * @param {number} min - The lower bound; keep it between 1 and 5.
+   * @param {number} max - The upper bound; keep it between 1 and 5.
+   * @property {number} y - The location of the game piece on the y-axis.
+   * @returns {undefined}
+   */
+  yCoord(min, max) {
+    var randRow = randomInteger(min, max) * BLOCK_HEIGHT;
+
+    this.y = BLOCK_HEIGHT_OFFSET + randRow + (BLOCK_HEIGHT - this.height) / 2;
+  }
+
+  /**
+   * Set the game piece's 'hit' zone for use in collision detection.
+   * @property {object} perimeter - The boundaries of the game piece on the x-axis and y-axis.
+   * @property {number} perimeter.top - The top of the game piece.
+   * @property {number} perimeter.left - The left side of the game piece.
+   * @property {number} perimeter.bottom - The bottom of the game piece.
+   * @property {number} perimeter.right - The right side of the game piece.
+   * @returns {undefined}
+   */
+  setPerimeter() {
+    this.perimeter = {
+      'top': this.y,
+      'left': this.x,
+      'bottom': this.y + this.height,
+      'right': this.x + this.width
+    };
+  }
+
+  /**
+   * Draw the game piece on the screen.
+   * @returns {undefined}
+   */
+  render() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+  }
+
+  /**
+   * Detect if this game piece was hit by another game piece.
+   * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+   * @param {object} object2 - An object representing a second game piece
+   * @returns {boolean} <em>true</em> | <em>false</em>
+   * @default <em>false</em>
+   */
+  hit(object2) {
+    let hit = false;
+
+    if (this.perimeter && object2.perimeter) {
+      hit = this.perimeter.left < object2.perimeter.right &&
+        this.perimeter.right > object2.perimeter.left &&
+        this.perimeter.top < object2.perimeter.bottom &&
+        this.perimeter.bottom > object2.perimeter.top;
+    }
+
+    return hit;
+  }
+}
 
 // --------------------------------------------------
 // Enemy class
@@ -238,54 +238,56 @@ const enemies = [
  * @extends GamePiece
  * @property {number} speed - The initial speed of the enemy game piece.
  */
-const Enemy = function () {
-  GamePiece.call(this);
-  this.reset();
-};
+class Enemy {
+  constructor() {
+    GamePiece.call(this);
+    this.reset();
+  }
+
+  /**
+   * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
+   * @property {number} speed - The initial speed of the enemy game piece.
+   * @returns {undefined}
+   */
+  reset() {
+    this.piece(enemies[randomInteger(1, enemies.length) - 1]);
+    this.xCoord(-3, -1);
+    this.yCoord(1, 3);
+    this.speed = randomInteger(75, 200);
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Updates the enemy's position and perimeter.
+   * <li>Checks if the enemy has walked off the playing field.
+   * <li>Checks if the enemy hit the player.
+   * </ul>
+   * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+   * @param {number} dt - A time delta between ticks
+   * @returns {undefined}
+   */
+   update(dt) {
+    // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
+    this.x += this.speed * dt;
+    // Give the bug a little up-and-down jiggle
+    this.y += randomInteger(-1, 1) / 3;
+    this.setPerimeter();
+    // Has the enemy walked off the right side?
+    if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
+      this.reset();
+    }
+    if (this.hit(player)) {
+      player.updateLives(-1);
+      player.reset();
+    }
+  }
+}
 
 // Subclass prototype delegation
 Enemy.prototype = Object.create(GamePiece.prototype);
 // Reset constructor from GamePiece to Enemy
 Enemy.prototype.constructor = Enemy;
-
-/**
- * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
- * @property {number} speed - The initial speed of the enemy game piece.
- * @returns {undefined}
- */
-Enemy.prototype.reset = function () {
-  this.piece(enemies[randomInteger(1, enemies.length) - 1]);
-  this.xCoord(-3, -1);
-  this.yCoord(1, 3);
-  this.speed = randomInteger(75, 200);
-};
-
-/**
- * This method:
- * <ul>
- * <li>Updates the enemy's position and perimeter.
- * <li>Checks if the enemy has walked off the playing field.
- * <li>Checks if the enemy hit the player.
- * </ul>
- * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
- * @param {number} dt - A time delta between ticks
- * @returns {undefined}
- */
-Enemy.prototype.update = function (dt) {
-  // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
-  this.x += this.speed * dt;
-  // Give the bug a little up-and-down jiggle
-  this.y += randomInteger(-1, 1) / 3;
-  this.setPerimeter();
-  // Has the enemy walked off the right side?
-  if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
-    this.reset();
-  }
-  if (this.hit(player)) {
-    player.updateLives(-1);
-    player.reset();
-  }
-};
 
 // --------------------------------------------------
 // Player class
@@ -357,153 +359,153 @@ const avatars = [
  * @param {string} [charId] - An optional parameter identifying the avatars.id to use. If not provided, an avatar will be randomly chosen.
  * @returns {undefined}
  */
-const Player = function (charId) {
-  GamePiece.call(this);
+class Player {
+  constructor(charId) {
+    GamePiece.call(this);
 
-  let obj = {};
+    let obj = {};
 
-  if (typeof charId !== 'undefined' && charId) {
-    obj = avatars.find((avatar) => avatar.id === charId);
-  } else {
-    const index = randomInteger(1, avatars.length) - 1;
+    if (typeof charId !== 'undefined' && charId) {
+      obj = avatars.find((avatar) => avatar.id === charId);
+    } else {
+      const index = randomInteger(1, avatars.length) - 1;
+      const radio = `input[name=player]:eq(${index})`;
 
-    const radio = `input[name=player]:eq(${index})`;
-
-    $(radio).prop('checked', true);
-    toggleAvatarSelection(false);
-    obj = avatars[index];
+      $(radio).prop('checked', true);
+      toggleAvatarSelection(false);
+      obj = avatars[index];
+    }
+    this.piece(obj);
+    this.score = 0;
+    this.lives = 3;
+    this.reset();
   }
 
-  this.piece(obj);
-  this.score = 0;
-  this.lives = 3;
-  this.reset();
-};
+  /**
+   * This method:
+   * <ul>
+   * <li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set starting position of the player.
+   * <li>Calls GamePiece.setPerimeter() to set the player's hit zone.
+   * <li>Initializes the tokenPoints and tokenLives properties.
+   * </ul>
+   * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
+   * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
+   * @returns {undefined}
+   */
+  reset() {
+    this.xCoord(0, 4);
+    this.yCoord(5, 5);
+    this.setPerimeter();
+    this.tokenPoints = 0;
+    this.tokenLives = 0;
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Checks if the player has zero lives and if so, calls gameOver().
+   * <li>Checks if the player has reached the safety zone and if so,
+   *   <ul>
+   *   <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>
+   *   <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>
+   *   <li>Places the player back to the starting position by calling <tt>reset()</tt>.
+   *   </ul>
+   * </ul>
+   * @returns {integer} - Number of lives
+   */
+  update() {
+    if (this.lives < 1) {
+      this.gameOver();
+
+      return 0;
+    }
+    // Has the player reached the safety zone?
+    if (this.y < FIELD_TOP) {
+      this.updateScore(1 + this.tokenPoints);
+      this.updateLives(this.tokenLives);
+      this.reset();
+    }
+    this.setPerimeter();
+
+    return 1;
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Updates the x coordinate if the player pressed the left or right movement key.
+   * <li>Updates the y coordinate if the player pressed the up or down movement key.
+   * </ul>
+   * @listens module:addEventListener~keyup
+   * @param {string} key - The key pressed by the player.
+   * @returns {undefined}
+   */
+  handleInput(key) {
+    switch (key) {
+      case 'up':
+        this.y -= this.y > FIELD_TOP ? BLOCK_HEIGHT : 0;
+        break;
+      case 'left':
+        this.x -= this.x - BLOCK_WIDTH > FIELD_LEFT ? BLOCK_WIDTH : 0;
+        break;
+      case 'down':
+        this.y += this.y < FIELD_BOTTOM ? BLOCK_HEIGHT : 0;
+        break;
+      case 'right':
+        this.x += this.x < FIELD_RIGHT ? BLOCK_WIDTH : 0;
+        break;
+      default:
+      // Do nothing
+    }
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Adds the value specified in the parameter to the score.
+   * <li>Uses jQuery to display the score on the page.
+   * </ul>
+   * @param {number} score - The number of points to add to the player's score.
+   * @returns {undefined}
+   */
+  updateScore(score) {
+    this.score += score;
+    $('#score').text(this.score);
+  }
+
+  /**
+   * This method:
+   * <ul>
+   * <li>Adds the value specified in the parameter to the player's lives, up to a maximum of 5.
+   * <li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.
+   * </ul>
+   * @param {number} lives - The number of lives to add to or deduct from the player's lives.
+   * @returns {undefined}
+   */
+  updateLives(lives) {
+    this.lives = Math.min(this.lives + lives, 5);
+    $('img.life').each(function (index) {
+      if (index < player.lives) {
+        $(this).removeClass('inactive');
+      } else {
+        $(this).addClass('inactive');
+      }
+    });
+  }
+
+  /**
+   * This method displays the final score on the page.
+    * @returns {undefined}
+  */
+  gameOver() {
+    $('#score').text(`Your Score: ${this.score}`);
+  }
+}
 
 // Subclass prototype delegation
 Player.prototype = Object.create(GamePiece.prototype);
 // Reset constructor from GamePiece to Player
 Player.prototype.constructor = Player;
-
-/**
- * This method:
- * <ul>
- * <li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set starting position of the player.
- * <li>Calls GamePiece.setPerimeter() to set the player's hit zone.
- * <li>Initializes the tokenPoints and tokenLives properties.
- * </ul>
- * @property {number} tokenPoints - The number of banked points accumulated by picking up tokens.
- * @property {number} tokenLives - The number of banked lives accumulated by picking up tokens.
- * @returns {undefined}
- */
-Player.prototype.reset = function () {
-  this.xCoord(0, 4);
-  this.yCoord(5, 5);
-  this.setPerimeter();
-  this.tokenPoints = 0;
-  this.tokenLives = 0;
-};
-
-/**
- * This method:
- * <ul>
- * <li>Checks if the player has zero lives and if so, calls gameOver().
- * <li>Checks if the player has reached the safety zone and if so,
- *   <ul>
- *   <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>
- *   <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>
- *   <li>Places the player back to the starting position by calling <tt>reset()</tt>.
- *   </ul>
- * </ul>
- * @returns {integer} - Number of lives
- */
-Player.prototype.update = function () {
-  if (this.lives < 1) {
-    this.gameOver();
-
-    return 0;
-  }
-  // Has the player reached the safety zone?
-  if (this.y < FIELD_TOP) {
-    this.updateScore(1 + this.tokenPoints);
-    this.updateLives(this.tokenLives);
-    this.reset();
-  }
-  this.setPerimeter();
-
-  return 1;
-};
-
-/**
- * This method:
- * <ul>
- * <li>Updates the x coordinate if the player pressed the left or right movement key.
- * <li>Updates the y coordinate if the player pressed the up or down movement key.
- * </ul>
- * @listens module:addEventListener~keyup
- * @param {string} key - The key pressed by the player.
- * @returns {undefined}
- */
-Player.prototype.handleInput = function (key) {
-  switch (key) {
-  case 'up':
-    this.y -= this.y > FIELD_TOP ? BLOCK_HEIGHT : 0;
-    break;
-  case 'left':
-    this.x -= this.x - BLOCK_WIDTH > FIELD_LEFT ? BLOCK_WIDTH : 0;
-    break;
-  case 'down':
-    this.y += this.y < FIELD_BOTTOM ? BLOCK_HEIGHT : 0;
-    break;
-  case 'right':
-    this.x += this.x < FIELD_RIGHT ? BLOCK_WIDTH : 0;
-    break;
-  default:
-    // Do nothing
-  }
-};
-
-/**
- * This method:
- * <ul>
- * <li>Adds the value specified in the parameter to the score.
- * <li>Uses jQuery to display the score on the page.
- * </ul>
- * @param {number} score - The number of points to add to the player's score.
- * @returns {undefined}
- */
-Player.prototype.updateScore = function (score) {
-  this.score += score;
-  $('#score').text(this.score);
-};
-
-/**
- * This method:
- * <ul>
- * <li>Adds the value specified in the parameter to the player's lives, up to a maximum of 5.
- * <li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.
- * </ul>
- * @param {number} lives - The number of lives to add to or deduct from the player's lives.
- * @returns {undefined}
- */
-Player.prototype.updateLives = function (lives) {
-  this.lives = Math.min(this.lives + lives, 5);
-  $('img.life').each(function (index) {
-    if (index < player.lives) {
-      $(this).removeClass('inactive');
-    } else {
-      $(this).addClass('inactive');
-    }
-  });
-};
-
-/**
- * This method displays the final score on the page.
-  * @returns {undefined}
-*/
-Player.prototype.gameOver = function () {
-  $('#score').text(`Your Score: ${this.score}`);
-};
 
 // --------------------------------------------------
 // Token class
@@ -655,8 +657,7 @@ class Token {
       this.fadeTime -= 100;
       if (this.fadeTime <= 0) {
         this.reset();
-      }
-      else {
+      } else {
         ctx.globalAlpha = this.fadeTime / this.alphaDivisor;
         GamePiece.prototype.render.call(this);
         ctx.globalAlpha = 1.0;
