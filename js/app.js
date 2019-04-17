@@ -270,9 +270,10 @@ const avatars = [
  * @param {string} [charId] - An optional parameter identifying the avatars.id to use. If not provided, an avatar will be randomly chosen.
  * @returns {undefined}
  */
-class Player {
+class Player extends GamePiece {
   constructor(charId) {
-    GamePiece.call(this);
+    super();
+    toggleAvatarSelection(false);
 
     let obj = {};
 
@@ -283,7 +284,6 @@ class Player {
       const radio = `input[name=player]:eq(${index})`;
 
       $(radio).prop('checked', true);
-      toggleAvatarSelection(false);
       obj = avatars[index];
     }
     this.piece(obj);
@@ -415,11 +415,6 @@ class Player {
   }
 }
 
-// Subclass prototype delegation
-Player.prototype = Object.create(GamePiece.prototype);
-// Reset constructor from GamePiece to Player
-Player.prototype.constructor = Player;
-
 /**
  * An instance of the Player class
  * @type {Player}
@@ -449,7 +444,7 @@ let player = new Player();
   *   }
   * ];
   */
- const enemies = [
+const enemies = [
    {
      'sprite': 'images/enemy-bug.png',
      'width': 99,
@@ -460,63 +455,59 @@ let player = new Player();
      'width': 63,
      'height': 66
    }
- ];
+];
 
- /**
+/**
   * @constructor
   * @extends GamePiece
   * @property {number} speed - The initial speed of the enemy game piece.
   */
- class Enemy {
-   constructor() {
-     GamePiece.call(this);
-     this.reset();
-   }
+class Enemy extends GamePiece {
+  constructor() {
+    super();
+    this.reset();
+  }
 
-   /**
-    * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
-    * @property {number} speed - The initial speed of the enemy game piece.
-    * @returns {undefined}
-    */
-   reset() {
-     this.piece(enemies[randomInteger(1, enemies.length) - 1]);
-     this.xCoord(-3, -1);
-     this.yCoord(1, 3);
-     this.speed = randomInteger(75, 200);
-   }
+  /**
+  * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
+  * @property {number} speed - The initial speed of the enemy game piece.
+  * @returns {undefined}
+  */
+  reset() {
+    this.piece(enemies[randomInteger(1, enemies.length) - 1]);
+    this.xCoord(-3, -1);
+    this.yCoord(1, 3);
+    this.speed = randomInteger(75, 200);
+  }
 
-   /**
-    * This method:
-    * <ul>
-    * <li>Updates the enemy's position and perimeter.
-    * <li>Checks if the enemy has walked off the playing field.
-    * <li>Checks if the enemy hit the player.
-    * </ul>
-    * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-    * @param {number} dt - A time delta between ticks
-    * @returns {undefined}
-    */
-    update(dt) {
-     // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
-     this.x += this.speed * dt;
-     // Give the bug a little up-and-down jiggle
-     this.y += randomInteger(-1, 1) / 3;
-     this.setPerimeter();
-     // Has the enemy walked off the right side?
-     if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
-       this.reset();
-     }
-     if (this.hit(player)) {
-       player.updateLives(-1);
-       player.reset();
-     }
-   }
- }
+  /**
+  * This method:
+  * <ul>
+  * <li>Updates the enemy's position and perimeter.
+  * <li>Checks if the enemy has walked off the playing field.
+  * <li>Checks if the enemy hit the player.
+  * </ul>
+  * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+  * @param {number} dt - A time delta between ticks
+  * @returns {undefined}
+  */
+  update(dt) {
+    // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
+    this.x += this.speed * dt;
+    // Give the bug a little up-and-down jiggle
+    this.y += randomInteger(-1, 1) / 3;
+    this.setPerimeter();
+    // Has the enemy walked off the right side?
+    if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
+      this.reset();
+    }
+    if (this.hit(player)) {
+      player.updateLives(-1);
+      player.reset();
+    }
+  }
+}
 
- // Subclass prototype delegation
- Enemy.prototype = Object.create(GamePiece.prototype);
- // Reset constructor from GamePiece to Enemy
- Enemy.prototype.constructor = Enemy;
 
 /**
  * Array of instances of the Enemy class
@@ -599,9 +590,9 @@ const tokens = [
  * @extends GamePiece
  * @returns {undefined}
  */
-class Token {
+class Token extends GamePiece {
   constructor() {
-    GamePiece.call(this);
+    super();
     this.reset();
   }
 
@@ -683,11 +674,6 @@ class Token {
   }
 }
 
-// Subclass prototype delegation
-Token.prototype = Object.create(GamePiece.prototype);
-// Reset constructor from GamePiece to Token
-Token.prototype.constructor = Token;
-
 /**
  * An instance of the Token class
  * @type {Token}
@@ -716,11 +702,13 @@ document.addEventListener('keyup', function (event) {
 });
 
 /// TODO Player selects avatar
+
 $(document).ready(function () {
+  toggleAvatarSelection(true);
+
   $('input[name=player]:radio').change(function() {
     const avatar = $('input[name=player]:checked').val();
 
-    alert(avatar);
     player = new Player(avatar);
   });
 });
