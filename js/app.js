@@ -1,4 +1,9 @@
+// Defined in engine.cs
+/* global ctx */
+// Defined in Resources.cs
+/* global Resources */
 /* eslint-disable id-length */
+
 /**
  * Size of a stone, grass or water block along x-axis.
  * @constant
@@ -107,9 +112,6 @@ function toggleAvatarSelection(enable) {
  * @returns {undefined}
  */
 class GamePiece {
-  constructor() {
-    'use strict';
-  }
 
   /**
    * Method that sets the sprite, width and height properties of a game piece.
@@ -134,6 +136,7 @@ class GamePiece {
    */
   xCoord(min, max) {
     var randCol = randomInteger(min, max) * BLOCK_WIDTH;
+
     this.x = randCol + (BLOCK_WIDTH - this.width) / 2;
   }
 
@@ -196,98 +199,6 @@ class GamePiece {
     return hit;
   }
 }
-
-// --------------------------------------------------
-// Enemy class
-// --------------------------------------------------
-/**
- * Array of objects that will be used to instantiate an enemy game piece
- * @typedef {object} enemies
- * @type {Object[]}
- * @property {string} sprite - The URL of the image sprite.
- * @property {number} width - The width of the image sprite.
- * @property {number} height - The height of the image sprite.
- * @example
- * var enemies = [
- *   {
- *     sprite: 'images/enemy-bug.png',
- *     width: 99,
- *     height: 66
- *   }, {
- *     sprite: 'images/ladybag.png',
- *     width: 63,
- *     height: 66
- *   }
- * ];
- */
-const enemies = [
-  {
-    'sprite': 'images/enemy-bug.png',
-    'width': 99,
-    'height': 66
-  }, {
-    // https://pixabay.com/en/handbag-bag-brown-clutch-leather-155755/
-    'sprite': 'images/ladybag.png',
-    'width': 63,
-    'height': 66
-  }
-];
-
-/**
- * @constructor
- * @extends GamePiece
- * @property {number} speed - The initial speed of the enemy game piece.
- */
-class Enemy {
-  constructor() {
-    GamePiece.call(this);
-    this.reset();
-  }
-
-  /**
-   * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
-   * @property {number} speed - The initial speed of the enemy game piece.
-   * @returns {undefined}
-   */
-  reset() {
-    this.piece(enemies[randomInteger(1, enemies.length) - 1]);
-    this.xCoord(-3, -1);
-    this.yCoord(1, 3);
-    this.speed = randomInteger(75, 200);
-  }
-
-  /**
-   * This method:
-   * <ul>
-   * <li>Updates the enemy's position and perimeter.
-   * <li>Checks if the enemy has walked off the playing field.
-   * <li>Checks if the enemy hit the player.
-   * </ul>
-   * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
-   * @param {number} dt - A time delta between ticks
-   * @returns {undefined}
-   */
-   update(dt) {
-    // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
-    this.x += this.speed * dt;
-    // Give the bug a little up-and-down jiggle
-    this.y += randomInteger(-1, 1) / 3;
-    this.setPerimeter();
-    // Has the enemy walked off the right side?
-    if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
-      this.reset();
-    }
-    if (this.hit(player)) {
-      player.updateLives(-1);
-      player.reset();
-    }
-  }
-}
-
-// Subclass prototype delegation
-Enemy.prototype = Object.create(GamePiece.prototype);
-// Reset constructor from GamePiece to Enemy
-Enemy.prototype.constructor = Enemy;
 
 // --------------------------------------------------
 // Player class
@@ -483,12 +394,14 @@ class Player {
    * @returns {undefined}
    */
   updateLives(lives) {
-    this.lives = Math.min(this.lives + lives, 5);
-    $('img.life').each(function (index) {
-      if (index < player.lives) {
-        $(this).removeClass('inactive');
+    const playerLives = Math.min(this.lives + lives, 5);
+
+    this.lives = playerLives;
+    $('img.life').each((index, elem) => {
+      if (index < playerLives) {
+        $(elem).removeClass('inactive');
       } else {
-        $(this).addClass('inactive');
+        $(elem).addClass('inactive');
       }
     });
   }
@@ -506,6 +419,110 @@ class Player {
 Player.prototype = Object.create(GamePiece.prototype);
 // Reset constructor from GamePiece to Player
 Player.prototype.constructor = Player;
+
+/**
+ * An instance of the Player class
+ * @type {Player}
+ */
+let player = new Player();
+
+// --------------------------------------------------
+// Enemy class
+// --------------------------------------------------
+/**
+ * Array of objects that will be used to instantiate an enemy game piece
+ * @typedef {object} enemies
+ * @type {Object[]}
+ * @property {string} sprite - The URL of the image sprite.
+ * @property {number} width - The width of the image sprite.
+ * @property {number} height - The height of the image sprite.
+ * @example
+ * var enemies = [
+  *   {
+  *     sprite: 'images/enemy-bug.png',
+  *     width: 99,
+  *     height: 66
+  *   }, {
+  *     sprite: 'images/ladybag.png',
+  *     width: 63,
+  *     height: 66
+  *   }
+  * ];
+  */
+ const enemies = [
+   {
+     'sprite': 'images/enemy-bug.png',
+     'width': 99,
+     'height': 66
+   }, {
+     // https://pixabay.com/en/handbag-bag-brown-clutch-leather-155755/
+     'sprite': 'images/ladybag.png',
+     'width': 63,
+     'height': 66
+   }
+ ];
+
+ /**
+  * @constructor
+  * @extends GamePiece
+  * @property {number} speed - The initial speed of the enemy game piece.
+  */
+ class Enemy {
+   constructor() {
+     GamePiece.call(this);
+     this.reset();
+   }
+
+   /**
+    * Place enemy at one of the stone-block rows (y-axis), starting off-canvas (x-axis)
+    * @property {number} speed - The initial speed of the enemy game piece.
+    * @returns {undefined}
+    */
+   reset() {
+     this.piece(enemies[randomInteger(1, enemies.length) - 1]);
+     this.xCoord(-3, -1);
+     this.yCoord(1, 3);
+     this.speed = randomInteger(75, 200);
+   }
+
+   /**
+    * This method:
+    * <ul>
+    * <li>Updates the enemy's position and perimeter.
+    * <li>Checks if the enemy has walked off the playing field.
+    * <li>Checks if the enemy hit the player.
+    * </ul>
+    * @see https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+    * @param {number} dt - A time delta between ticks
+    * @returns {undefined}
+    */
+    update(dt) {
+     // Multiply any movement by the dt parameter to ensure the game runs at the same speed for all computers.
+     this.x += this.speed * dt;
+     // Give the bug a little up-and-down jiggle
+     this.y += randomInteger(-1, 1) / 3;
+     this.setPerimeter();
+     // Has the enemy walked off the right side?
+     if (this.x > FIELD_RIGHT + BLOCK_WIDTH) {
+       this.reset();
+     }
+     if (this.hit(player)) {
+       player.updateLives(-1);
+       player.reset();
+     }
+   }
+ }
+
+ // Subclass prototype delegation
+ Enemy.prototype = Object.create(GamePiece.prototype);
+ // Reset constructor from GamePiece to Enemy
+ Enemy.prototype.constructor = Enemy;
+
+/**
+ * Array of instances of the Enemy class
+ * @type {Enemy[]}
+ */
+const allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()];
 
 // --------------------------------------------------
 // Token class
@@ -670,21 +687,6 @@ class Token {
 Token.prototype = Object.create(GamePiece.prototype);
 // Reset constructor from GamePiece to Token
 Token.prototype.constructor = Token;
-
-// --------------------------------------------------
-// Instantiate objects
-// --------------------------------------------------
-/**
- * Array of instances of the Enemy class
- * @type {Enemy[]}
- */
-const allEnemies = [new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy(), new Enemy()];
-
-/**
- * An instance of the Player class
- * @type {Player}
- */
-let player = new Player();
 
 /**
  * An instance of the Token class
