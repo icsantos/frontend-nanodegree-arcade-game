@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2>
-        Token
-        </h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Token<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h2>
+        
+            <div class="class-description">This function constructs a GamePiece of tokens type.</div>
         
     
 </header>
@@ -41,16 +41,16 @@
         
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Token"><span class="type-signature"></span>new Token<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="Token"><span class="type-signature"></span>new Token<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
-
-<div class="description">
-    This function constructs a GamePiece of tokens type.
-</div>
 
 
 
@@ -93,7 +93,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line563">line 563</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line593">line 593</a>
     </li></ul></dd>
     
 
@@ -114,6 +114,26 @@
 
 
 
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -139,7 +159,9 @@
 
     
 
-     
+    
+
+    
 
     
 
@@ -153,7 +175,9 @@
 
     
 
+    
     <h4 class="name" id="hit"><span class="type-signature"></span>hit<span class="signature">(object2)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
 
     
 
@@ -263,7 +287,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line179">line 179</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -318,12 +342,16 @@
 
 
 
+
+
         
             
 
     
 
-    <h4 class="name" id="piece"><span class="type-signature"></span>piece<span class="signature">(obj)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="piece"><span class="type-signature"></span>piece<span class="signature">(obj)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -532,7 +560,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line114">line 114</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -555,6 +583,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -563,14 +611,23 @@
 
     
 
+    
     <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"></span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Deducts 100 from the delay property.<li>If the delay is more than zero, it does nothing else.<li>If the delay has reached zero or below, it deducts 100 from the fadeTime property.<li>If the fadeTime is more than zero, it adjusts the globalAlpha, calls the GamePiece.prototype.render() method, then resets the globalAlpha to 1.<li>If the fadeTime has reached zero or below, it calls the token's reset() method.</ul>
+    This method:
+<ul>
+<li>Deducts 100 from the delay property.
+<li>If the delay is more than zero, it does nothing else.
+<li>If the delay has reached zero or below, it deducts 100 from the fadeTime property.
+<li>If the fadeTime is more than zero, it adjusts the globalAlpha, calls the GamePiece.prototype.render() method, then resets the globalAlpha to 1.
+<li>If the fadeTime has reached zero or below, it calls the token's reset() method.
+</ul>
 </div>
 
 
@@ -619,7 +676,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line633">line 633</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line662">line 662</a>
     </li></ul></dd>
     
 
@@ -645,19 +702,29 @@
 
 
 
+
+
         
             
 
     
 
-    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Randomly selects the token to use.<li>Calls GamePiece.piece() to set the sprite, height and width properties.<li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set the position of the token.  The token will be placed on a stone-block.<li>Initializes the points, lives, delay, fadeTime and alphaDivisor properties.</ul>
+    This method:
+<ul>
+<li>Randomly selects the token to use.
+<li>Calls GamePiece.piece() to set the sprite, height and width properties.
+<li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set the position of the token.  The token will be placed on a stone-block.
+<li>Initializes the points, lives, delay, fadeTime and alphaDivisor properties.
+</ul>
 </div>
 
 
@@ -845,7 +912,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line585">line 585</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line614">line 614</a>
     </li></ul></dd>
     
 
@@ -868,6 +935,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -876,7 +963,9 @@
 
     
 
-    <h4 class="name" id="setPerimeter"><span class="type-signature"></span>setPerimeter<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="setPerimeter"><span class="type-signature"></span>setPerimeter<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1101,7 +1190,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line154">line 154</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -1124,6 +1213,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1132,14 +1241,25 @@
 
     
 
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Calls GamePiece.setPerimeter() to set the token's hit zone.<li>Checks if the delay has expired and if the token was hit by the player, and if so:  <ul>  <li>Bank the points by adding token.points to player.tokenPoints.  <li>Bank the lives by adding token.lives to player.tokenLives.  <li>Prepare another token by calling the reset() method.  </ul></ul>
+    This method:
+<ul>
+<li>Calls GamePiece.setPerimeter() to set the token's hit zone.
+<li>Checks if the delay has expired and if the token was hit by the player, and if so:
+  <ul>
+  <li>Bank the points by adding token.points to player.tokenPoints.
+  <li>Bank the lives by adding token.lives to player.tokenLives.
+  <li>Prepare another token by calling the reset() method.
+  </ul>
+</ul>
 </div>
 
 
@@ -1258,7 +1378,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line612">line 612</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line642">line 642</a>
     </li></ul></dd>
     
 
@@ -1281,6 +1401,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1289,7 +1429,9 @@
 
     
 
-    <h4 class="name" id="xCoord"><span class="type-signature"></span>xCoord<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="xCoord"><span class="type-signature"></span>xCoord<span class="signature">(min, max)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1469,7 +1611,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line127">line 127</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -1492,6 +1634,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1500,7 +1662,9 @@
 
     
 
-    <h4 class="name" id="yCoord"><span class="type-signature"></span>yCoord<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="yCoord"><span class="type-signature"></span>yCoord<span class="signature">(min, max)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1680,7 +1844,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line140">line 140</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -1701,6 +1865,26 @@
 
 
 
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -1728,7 +1912,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 09 2015 05:25:57 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 17 2019 01:08:03 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

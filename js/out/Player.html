@@ -28,9 +28,15 @@
 
 <header>
     
-        <h2>
-        Player
-        </h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Player<span class="signature">(charId<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {undefined}</span></h2>
+        
+            <div class="class-description">This function:
+<ul>
+<li>Constructs a GamePiece of avatars type.
+<li>Selects the avatar to use (if one is not specified) and uses jQuery to indicate the selected avatar.
+<li>Calls GamePiece.piece() to set the sprite, height and width properties.
+<li>Initializes the score and lives properties.
+</ul></div>
         
     
 </header>
@@ -41,16 +47,16 @@
         
 
     
+    <h2>Constructor</h2>
+    
 
-    <h4 class="name" id="Player"><span class="type-signature"></span>new Player<span class="signature">(charid<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="Player"><span class="type-signature"></span>new Player<span class="signature">(charId<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
-
-<div class="description">
-    This function:<ul><li>Constructs a GamePiece of avatars type.<li>Selects the avatar to use (if one is not specified) and uses jQuery to indicate the selected avatar.<li>Calls GamePiece.piece() to set the sprite, height and width properties.<li>Initializes the score and lives properties.</ul>
-</div>
 
 
 
@@ -87,7 +93,7 @@
 
         <tr>
             
-                <td class="name"><code>charid</code></td>
+                <td class="name"><code>charId</code></td>
             
 
             <td class="type">
@@ -229,7 +235,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line349">line 349</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line273">line 273</a>
     </li></ul></dd>
     
 
@@ -250,6 +256,26 @@
 
 
 
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -275,7 +301,9 @@
 
     
 
-     
+    
+
+    
 
     
 
@@ -289,14 +317,16 @@
 
     
 
-    <h4 class="name" id="gameOver"><span class="type-signature"></span>gameOver<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="gameOver"><span class="type-signature"></span>gameOver<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method uses jQuery to display the final score on the page.
+    This method displays the final score on the page.
 </div>
 
 
@@ -340,7 +370,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line484">line 484</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line413">line 413</a>
     </li></ul></dd>
     
 
@@ -363,6 +393,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -371,14 +421,20 @@
 
     
 
-    <h4 class="name" id="handleInput"><span class="type-signature"></span>handleInput<span class="signature">(key)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="handleInput"><span class="type-signature"></span>handleInput<span class="signature">(key)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Updates the x coordinate if the player pressed the left or right movement key.<li>Updates the y coordinate if the player pressed the up or down movement key.</ul>
+    This method:
+<ul>
+<li>Updates the x coordinate if the player pressed the left or right movement key.
+<li>Updates the y coordinate if the player pressed the up or down movement key.
+</ul>
 </div>
 
 
@@ -471,7 +527,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line429">line 429</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line354">line 354</a>
     </li></ul></dd>
     
 
@@ -499,6 +555,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -507,7 +583,9 @@
 
     
 
+    
     <h4 class="name" id="hit"><span class="type-signature"></span>hit<span class="signature">(object2)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
+    
 
     
 
@@ -617,7 +695,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line179">line 179</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -672,12 +750,16 @@
 
 
 
+
+
         
             
 
     
 
-    <h4 class="name" id="piece"><span class="type-signature"></span>piece<span class="signature">(obj)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="piece"><span class="type-signature"></span>piece<span class="signature">(obj)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -886,7 +968,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line114">line 114</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line124">line 124</a>
     </li></ul></dd>
     
 
@@ -909,6 +991,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -917,7 +1019,9 @@
 
     
 
-    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -973,7 +1077,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line167">line 167</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -996,6 +1100,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1004,14 +1128,21 @@
 
     
 
-    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="reset"><span class="type-signature"></span>reset<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set starting position of the player.<li>Calls GamePiece.setPerimeter() to set the player's hit zone.<li>Initializes the tokenPoints and tokenLives properties.</ul>
+    This method:
+<ul>
+<li>Calls GamePiece.xCoord() and GamePiece.yCoord() to set starting position of the player.
+<li>Calls GamePiece.setPerimeter() to set the player's hit zone.
+<li>Initializes the tokenPoints and tokenLives properties.
+</ul>
 </div>
 
 
@@ -1130,7 +1261,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line382">line 382</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line306">line 306</a>
     </li></ul></dd>
     
 
@@ -1153,6 +1284,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1161,7 +1312,9 @@
 
     
 
-    <h4 class="name" id="setPerimeter"><span class="type-signature"></span>setPerimeter<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="setPerimeter"><span class="type-signature"></span>setPerimeter<span class="signature">()</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1386,7 +1539,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line154">line 154</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line165">line 165</a>
     </li></ul></dd>
     
 
@@ -1409,6 +1562,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1417,14 +1590,25 @@
 
     
 
-    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">()</span><span class="type-signature"> &rarr; {integer}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Checks if the player has zero lives and if so, calls gameOver().<li>Checks if the player has reached the safety zone and if so,   <ul>  <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>  <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>  <li>Places the player back to the starting position by calling <tt>reset()</tt>.  </ul></ul>
+    This method:
+<ul>
+<li>Checks if the player has zero lives and if so, calls gameOver().
+<li>Checks if the player has reached the safety zone and if so,
+  <ul>
+  <li>Updates score by calling <tt>updateScore(1 + this.tokenPoints)</tt>
+  <li>Updates lives by calling <tt>updateLives(this.tokenLives)</tt>
+  <li>Places the player back to the starting position by calling <tt>reset()</tt>.
+  </ul>
+</ul>
 </div>
 
 
@@ -1468,7 +1652,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line403">line 403</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line327">line 327</a>
     </li></ul></dd>
     
 
@@ -1491,6 +1675,30 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - Number of lives
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">integer</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1499,14 +1707,20 @@
 
     
 
-    <h4 class="name" id="updateLives"><span class="type-signature"></span>updateLives<span class="signature">(lives)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="updateLives"><span class="type-signature"></span>updateLives<span class="signature">(lives)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Adds the value specified in the parameter to the player's lives, up to a maximum of 5.<li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.</ul>
+    This method:
+<ul>
+<li>Adds the value specified in the parameter to the player's lives, up to a maximum of 5.
+<li>Uses jQuery to display the number of lives on the page, represented by the number of visible heart images.
+</ul>
 </div>
 
 
@@ -1599,7 +1813,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line469">line 469</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line396">line 396</a>
     </li></ul></dd>
     
 
@@ -1622,6 +1836,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1630,14 +1864,20 @@
 
     
 
-    <h4 class="name" id="updateScore"><span class="type-signature"></span>updateScore<span class="signature">(score)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="updateScore"><span class="type-signature"></span>updateScore<span class="signature">(score)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
 
 
 <div class="description">
-    This method:<ul><li>Adds the value specified in the parameter to the score.<li>Uses jQuery to display the score on the page.</ul>
+    This method:
+<ul>
+<li>Adds the value specified in the parameter to the score.
+<li>Uses jQuery to display the score on the page.
+</ul>
 </div>
 
 
@@ -1730,7 +1970,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line455">line 455</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line382">line 382</a>
     </li></ul></dd>
     
 
@@ -1753,6 +1993,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1761,7 +2021,9 @@
 
     
 
-    <h4 class="name" id="xCoord"><span class="type-signature"></span>xCoord<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="xCoord"><span class="type-signature"></span>xCoord<span class="signature">(min, max)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -1941,7 +2203,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line127">line 127</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -1964,6 +2226,26 @@
 
 
 
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
 
 
@@ -1972,7 +2254,9 @@
 
     
 
-    <h4 class="name" id="yCoord"><span class="type-signature"></span>yCoord<span class="signature">(min, max)</span><span class="type-signature"></span></h4>
+    
+    <h4 class="name" id="yCoord"><span class="type-signature"></span>yCoord<span class="signature">(min, max)</span><span class="type-signature"> &rarr; {undefined}</span></h4>
+    
 
     
 
@@ -2152,7 +2436,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line140">line 140</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -2173,6 +2457,26 @@
 
 
 
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -2200,7 +2504,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.2</a> on Wed Sep 09 2015 05:25:57 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 17 2019 01:08:02 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
